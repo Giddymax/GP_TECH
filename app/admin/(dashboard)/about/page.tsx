@@ -35,7 +35,7 @@ function ItemsList({ items, section }: { items: ContentItemRow[]; section: Conte
                 title={`Delete "${item.title}"?`}
                 description="It will be removed from the site immediately."
                 confirmLabel="Delete"
-                onConfirm={() => deleteContentItem(item.id, section)}
+                onConfirm={deleteContentItem.bind(null, item.id, section)}
                 successMessage="Deleted"
               />
             </div>

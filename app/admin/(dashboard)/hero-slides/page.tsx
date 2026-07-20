@@ -26,7 +26,7 @@ export default async function HeroSlidesPage() {
         {(slides ?? []).map((slide) => (
           <div key={slide.id} className="overflow-hidden rounded-2xl border border-line bg-white shadow-card">
             <div className="relative aspect-video bg-off-white">
-              <Image src={slide.image_url} alt={slide.alt_text} fill sizes="400px" className="object-cover" />
+              <Image src={slide.image_url} alt={slide.alt_text} fill sizes="400px" unoptimized className="object-cover" />
               {!slide.published ? (
                 <span className="absolute left-2 top-2 rounded-full bg-ink/80 px-2.5 py-1 text-[11px] font-medium text-off-white">
                   Unpublished
@@ -49,7 +49,7 @@ export default async function HeroSlidesPage() {
                   title="Delete this slide?"
                   description="It will stop appearing in the homepage rotation immediately."
                   confirmLabel="Delete"
-                  onConfirm={() => deleteHeroSlide(slide.id)}
+                  onConfirm={deleteHeroSlide.bind(null, slide.id)}
                   successMessage="Slide deleted"
                 />
               </div>

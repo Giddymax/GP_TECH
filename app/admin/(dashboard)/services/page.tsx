@@ -53,7 +53,7 @@ export default async function ServicesAdminPage() {
                   title={`Delete "${service.name}"?`}
                   description="It will be removed from Home and the Services page immediately."
                   confirmLabel="Delete"
-                  onConfirm={() => deleteService(service.id)}
+                  onConfirm={deleteService.bind(null, service.id)}
                   successMessage="Service deleted"
                 />
               </div>

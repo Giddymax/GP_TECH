@@ -50,6 +50,7 @@ export function HeroSlider({ slides }: { slides: HeroSlideRow[] }) {
             fill
             priority={i === 0}
             sizes="100vw"
+            unoptimized
             className="object-cover mix-blend-luminosity"
           />
         </div>

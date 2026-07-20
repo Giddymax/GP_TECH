@@ -53,7 +53,7 @@ export default async function HardwareAdminPage() {
                   title={`Delete "${item.title}"?`}
                   description="It will be removed from the Hardware page immediately."
                   confirmLabel="Delete"
-                  onConfirm={() => deleteHardwareItem(item.id)}
+                  onConfirm={deleteHardwareItem.bind(null, item.id)}
                   successMessage="Item deleted"
                 />
               </div>

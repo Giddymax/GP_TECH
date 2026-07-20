@@ -42,7 +42,7 @@ export function ImageUploadField({
       <div className="flex items-center gap-4">
         <div className="relative flex h-20 w-32 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-line bg-off-white">
           {value ? (
-            <Image src={value} alt="" fill sizes="128px" className="object-cover" />
+            <Image src={value} alt="" fill sizes="128px" unoptimized className="object-cover" />
           ) : (
             <ImageOff className="h-5 w-5 text-muted" />
           )}
