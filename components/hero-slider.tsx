@@ -56,7 +56,7 @@ export function HeroSlider({ slides }: { slides: HeroSlideRow[] }) {
             <video
               src={slide.image_url}
               aria-label={slide.alt_text}
-              className="h-full w-full object-cover mix-blend-luminosity"
+              className="h-full w-full object-cover"
               autoPlay={!reducedMotion}
               muted
               loop
@@ -71,20 +71,15 @@ export function HeroSlider({ slides }: { slides: HeroSlideRow[] }) {
               priority={i === 0}
               sizes="100vw"
               unoptimized
-              className="object-cover mix-blend-luminosity"
+              className="object-cover"
             />
           )}
         </div>
       ))}
 
-      {/* Brand-tinted + darkening overlay so hero text stays legible over any photo */}
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(180deg, rgba(19,36,46,0.75) 0%, rgba(19,36,46,0.88) 60%, rgba(19,36,46,0.96) 100%)",
-        }}
-      />
+      {/* Flat, moderate scrim so the text column stays readable everywhere it might
+          land without a gradient "bright spot" that could sit right behind it */}
+      <div className="pointer-events-none absolute inset-0 bg-ink/45" />
 
       {slides.length > 1 ? (
         <div className="absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 gap-2 sm:bottom-8">
