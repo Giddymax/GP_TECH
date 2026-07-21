@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Trash2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { ConfirmActionDialog } from "@/components/admin/confirm-action-dialog";
+import { HeroSlidesPreview } from "@/components/admin/hero-slides-preview";
 import { Button } from "@/components/ui/button";
 import { SlideForm } from "./slide-form";
 import { deleteHeroSlide } from "./actions";
@@ -22,7 +23,11 @@ export default async function HeroSlidesPage() {
         <SlideForm />
       </div>
 
-      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-8">
+        <HeroSlidesPreview slides={slides ?? []} />
+      </div>
+
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {(slides ?? []).map((slide) => (
           <div key={slide.id} className="overflow-hidden rounded-2xl border border-line bg-white shadow-card">
             <div className="relative aspect-video bg-off-white">

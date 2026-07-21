@@ -9,6 +9,7 @@ import { Container } from "@/components/container";
 import { Eyebrow } from "@/components/eyebrow";
 import { Button } from "@/components/ui/button";
 import { whatsappLink, whatsappMessages } from "@/lib/constants";
+import { HeroPeekCarousel } from "@/components/hero-peek-carousel";
 import type { HeroSlideRow } from "@/lib/supabase/types";
 
 const AUTOPLAY_MS = 6000;
@@ -39,23 +40,6 @@ function SlideBackground({ slide, priority }: { slide: HeroSlideRow; priority: b
       className="object-cover"
     />
   );
-}
-
-/** Static preview used in the thumbnail strip — video slides show their first frame, not a playing loop. */
-function SlideThumb({ slide }: { slide: HeroSlideRow }) {
-  if (slide.media_type === "video") {
-    return (
-      <video
-        src={slide.image_url}
-        aria-label={slide.alt_text}
-        className="h-full w-full object-cover"
-        muted
-        playsInline
-        preload="metadata"
-      />
-    );
-  }
-  return <Image src={slide.image_url} alt={slide.alt_text} fill unoptimized className="object-cover" />;
 }
 
 export function HeroSlider({
@@ -91,9 +75,6 @@ export function HeroSlider({
       if (timerRef.current) clearInterval(timerRef.current);
     };
   }, [slides.length, paused, reducedMotion]);
-
-  const prevIndex = (active - 1 + slides.length) % slides.length;
-  const nextIndex = (active + 1) % slides.length;
 
   return (
     <div
@@ -164,39 +145,7 @@ export function HeroSlider({
           No jargon. No trip to an office.
         </p>
 
-        {slides.length > 0 ? (
-          <div className="mt-10 flex items-center justify-center sm:mt-12">
-            {slides.length > 1 ? (
-              <button
-                type="button"
-                onClick={() => setActive(prevIndex)}
-                aria-label="Show previous slide"
-                className="relative h-20 w-14 shrink-0 overflow-hidden rounded-l-2xl opacity-50 shadow-card transition-opacity duration-300 hover:opacity-80 sm:h-28 sm:w-20"
-              >
-                <div className="absolute inset-y-0 right-0 w-32 sm:w-44">
-                  <SlideThumb slide={slides[prevIndex]} />
-                </div>
-              </button>
-            ) : null}
-
-            <div className="relative z-10 h-20 w-32 shrink-0 overflow-hidden rounded-2xl shadow-card-hover ring-1 ring-white/20 sm:h-28 sm:w-44">
-              <SlideThumb slide={slides[active]} />
-            </div>
-
-            {slides.length > 1 ? (
-              <button
-                type="button"
-                onClick={() => setActive(nextIndex)}
-                aria-label="Show next slide"
-                className="relative h-20 w-14 shrink-0 overflow-hidden rounded-r-2xl opacity-50 shadow-card transition-opacity duration-300 hover:opacity-80 sm:h-28 sm:w-20"
-              >
-                <div className="absolute inset-y-0 left-0 w-32 sm:w-44">
-                  <SlideThumb slide={slides[nextIndex]} />
-                </div>
-              </button>
-            ) : null}
-          </div>
-        ) : null}
+        <HeroPeekCarousel slides={slides} active={active} onSelect={setActive} className="mt-10 sm:mt-14" />
       </Container>
     </div>
   );
