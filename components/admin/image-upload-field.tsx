@@ -5,8 +5,11 @@ import Image from "next/image";
 import { Upload, Loader2, ImageOff } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { uploadImage } from "@/lib/actions/upload-image";
+import { createClient } from "@/lib/supabase/browser";
 import type { HeroMediaType } from "@/lib/supabase/types";
+
+const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
+const MAX_VIDEO_BYTES = 40 * 1024 * 1024;
 
 export function ImageUploadField({
   value,
@@ -27,18 +30,47 @@ export function ImageUploadField({
   const handleFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    setUploading(true);
-    const formData = new FormData();
-    formData.set("file", file);
-    const result = await uploadImage(formData);
-    setUploading(false);
-    if (result.error) {
-      toast.error("Upload failed", { description: result.error });
-    } else if (result.url && result.mediaType) {
-      onChange(result.url, result.mediaType);
-      toast.success(result.mediaType === "video" ? "Video uploaded" : "Image uploaded");
+
+    const isVideo = file.type.startsWith("video/");
+    const isImage = file.type.startsWith("image/");
+    if (!isImage && !isVideo) {
+      toast.error("Upload failed", { description: "Only image or video files are allowed." });
+      if (inputRef.current) inputRef.current.value = "";
+      return;
     }
-    if (inputRef.current) inputRef.current.value = "";
+    const maxBytes = isVideo ? MAX_VIDEO_BYTES : MAX_IMAGE_BYTES;
+    if (file.size > maxBytes) {
+      toast.error("Upload failed", {
+        description: isVideo ? "Videos must be smaller than 40MB — keep clips short." : "Images must be smaller than 5MB.",
+      });
+      if (inputRef.current) inputRef.current.value = "";
+      return;
+    }
+
+    setUploading(true);
+    try {
+      // Uploads straight from the browser to Supabase Storage — skipping our
+      // server entirely, since routing a video through a Server Action was
+      // slow enough to look hung and could hit serverless time limits.
+      const supabase = createClient();
+      const ext = file.name.split(".").pop() || (isVideo ? "mp4" : "jpg");
+      const path = `${crypto.randomUUID()}.${ext}`;
+
+      const { error } = await supabase.storage.from("media").upload(path, file, {
+        contentType: file.type,
+        upsert: false,
+      });
+      if (error) throw error;
+
+      const { data } = supabase.storage.from("media").getPublicUrl(path);
+      onChange(data.publicUrl, isVideo ? "video" : "image");
+      toast.success(isVideo ? "Video uploaded" : "Image uploaded");
+    } catch (err) {
+      toast.error("Upload failed", { description: err instanceof Error ? err.message : "Please try again." });
+    } finally {
+      setUploading(false);
+      if (inputRef.current) inputRef.current.value = "";
+    }
   };
 
   return (
