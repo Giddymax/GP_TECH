@@ -2,10 +2,8 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/container";
 import { Eyebrow } from "@/components/eyebrow";
-import { PixelBars } from "@/components/pixel-bars";
 import { HeroSlider } from "@/components/hero-slider";
 import { Button } from "@/components/ui/button";
-import { whatsappLink, whatsappMessages } from "@/lib/constants";
 import { getIcon } from "@/lib/icon-map";
 import { getHeroSlides, getServices, getContentItems, getSiteSettings } from "@/lib/data/public";
 
@@ -27,47 +25,7 @@ export default async function HomePage() {
     <>
       {/* Hero */}
       <section className="relative overflow-hidden bg-ink">
-        <HeroSlider slides={slides} />
-        {slides.length === 0 ? (
-          <div
-            className="pointer-events-none absolute inset-0 opacity-40"
-            style={{
-              backgroundImage:
-                "radial-gradient(circle at 15% 20%, rgba(43,179,185,0.25), transparent 45%), radial-gradient(circle at 85% 0%, rgba(0,86,114,0.5), transparent 50%)",
-            }}
-          />
-        ) : null}
-        <Container className="relative flex flex-col items-center py-28 text-center sm:py-36">
-          <Eyebrow className="text-accent-bright [text-shadow:0_1px_12px_rgba(0,0,0,0.6)]">
-            Accra — for shops, farms, schools, clinics, churches &amp; offices
-          </Eyebrow>
-          <h1 className="mt-6 max-w-4xl text-5xl font-light leading-[1.05] text-off-white [text-shadow:0_2px_20px_rgba(0,0,0,0.55)] sm:text-7xl lg:text-[5.5rem]">
-            {settings.hero_line}
-          </h1>
-          <p className="mt-7 max-w-lg text-base leading-7 text-off-white/70 [text-shadow:0_1px_12px_rgba(0,0,0,0.5)] sm:text-lg">
-            Websites, records &amp; receipts, business equipment, and IT support —
-            set up in person by a team that comes to you.
-          </p>
-          <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-            <Button asChild size="lg">
-              <Link href="/contact">
-                Get a free assessment
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
-            <Button asChild size="lg" variant="whatsapp">
-              <a
-                href={whatsappLink(whatsappMessages.assessment, settings.whatsapp_number)}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Chat on WhatsApp
-              </a>
-            </Button>
-          </div>
-          <p className="mt-4 text-sm text-off-white/50 [text-shadow:0_1px_10px_rgba(0,0,0,0.5)]">No jargon. No trip to an office.</p>
-          <PixelBars className="mt-16" tone="light" />
-        </Container>
+        <HeroSlider slides={slides} heroLine={settings.hero_line} whatsappNumber={settings.whatsapp_number} />
       </section>
 
       {/* Trust band */}
