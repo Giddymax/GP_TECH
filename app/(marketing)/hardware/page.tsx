@@ -38,7 +38,7 @@ export default async function HardwarePage() {
             {equipment.map((item) => {
               const Icon = getIcon(item.icon);
               return (
-                <div key={item.id} className="flex gap-5 rounded-2xl bg-ink p-7">
+                <div key={item.id} className="flex gap-5 rounded-2xl bg-navy p-7">
                   <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/10 text-accent-bright">
                     <Icon className="h-5 w-5" />
                   </span>
@@ -53,7 +53,7 @@ export default async function HardwarePage() {
         </Container>
       </section>
 
-      <section className="bg-blue py-20">
+      <section className="border-t border-white/10 bg-navy py-20">
         <Container className="flex flex-col items-center text-center">
           <h2 className="max-w-md text-3xl font-light leading-tight text-off-white sm:text-4xl">
             Not sure what equipment you need?

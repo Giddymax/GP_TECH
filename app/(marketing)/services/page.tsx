@@ -40,16 +40,16 @@ export default async function ServicesPage() {
               <div
                 key={service.slug}
                 id={service.slug}
-                className="grid items-start gap-8 border-t border-line pt-12 first:border-t-0 first:pt-0 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16"
+                className="grid items-start gap-8 border-t border-white/10 pt-12 first:border-t-0 first:pt-0 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16"
               >
                 <div className={reversed ? "lg:order-2" : ""}>
-                  <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-light text-accent-dark">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 text-accent-bright">
                     <Icon className="h-6 w-6" />
                   </span>
-                  <h2 className="mt-5 text-3xl font-light leading-tight text-ink sm:text-4xl">
+                  <h2 className="mt-5 text-3xl font-light leading-tight text-off-white sm:text-4xl">
                     {service.name}
                   </h2>
-                  <p className="mt-4 text-base leading-7 text-muted">{service.description}</p>
+                  <p className="mt-4 text-base leading-7 text-off-white/60">{service.description}</p>
                   <Button asChild className="mt-6">
                     <Link href={`/contact?service=${service.slug}`}>
                       Ask about {service.name}
@@ -57,10 +57,10 @@ export default async function ServicesPage() {
                     </Link>
                   </Button>
                 </div>
-                <ul className={`space-y-3 rounded-2xl border border-line bg-white p-7 shadow-card ${reversed ? "lg:order-1" : ""}`}>
+                <ul className={`space-y-3 rounded-2xl border border-white/10 bg-navy p-7 ${reversed ? "lg:order-1" : ""}`}>
                   {service.includes.map((item) => (
-                    <li key={item} className="flex gap-3 text-sm leading-6 text-ink/85">
-                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-accent-dark" />
+                    <li key={item} className="flex gap-3 text-sm leading-6 text-off-white/85">
+                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-accent-bright" />
                       {item}
                     </li>
                   ))}

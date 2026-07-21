@@ -70,26 +70,26 @@ export default async function ContactPage({
                   href={channel.href}
                   target={channel.href.startsWith("http") ? "_blank" : undefined}
                   rel={channel.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                  className="group flex items-center gap-4 rounded-2xl border border-line bg-white p-5 shadow-card transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-card-hover"
+                  className="group flex items-center gap-4 rounded-2xl border border-white/10 bg-navy p-5 transition-[transform,background-color] duration-200 hover:-translate-y-0.5 hover:bg-navy-elevated"
                 >
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-light text-accent-dark transition-colors group-hover:bg-accent group-hover:text-ink">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/10 text-accent-bright transition-colors group-hover:bg-accent group-hover:text-ink">
                     <channel.icon className="h-5 w-5" />
                   </span>
                   <div>
-                    <p className="eyebrow text-muted">{channel.label}</p>
-                    <p className="text-base font-semibold text-ink">{channel.value}</p>
-                    <p className="text-xs text-muted">{channel.caption}</p>
+                    <p className="eyebrow text-off-white/50">{channel.label}</p>
+                    <p className="text-base font-semibold text-off-white">{channel.value}</p>
+                    <p className="text-xs text-off-white/50">{channel.caption}</p>
                   </div>
                 </a>
               ))}
             </div>
 
-            <div className="rounded-2xl border border-line bg-white p-5 shadow-card">
+            <div className="rounded-2xl border border-white/10 bg-navy p-5">
               <div className="flex items-center gap-3">
-                <Clock className="h-5 w-5 text-accent-dark" />
-                <p className="eyebrow text-muted">Business hours</p>
+                <Clock className="h-5 w-5 text-accent-bright" />
+                <p className="eyebrow text-off-white/50">Business hours</p>
               </div>
-              <p className="mt-3 text-sm leading-6 text-ink/80">
+              <p className="mt-3 text-sm leading-6 text-off-white/70">
                 {settings.hours.map((h, i) => (
                   <span key={i}>
                     {h.day}, {h.time}
@@ -100,9 +100,9 @@ export default async function ContactPage({
             </div>
           </div>
 
-          <div className="rounded-2xl border border-line bg-white p-7 shadow-card sm:p-9">
-            <h2 className="text-2xl font-light text-ink">Send us a message</h2>
-            <p className="mt-1.5 text-sm text-muted">
+          <div className="rounded-2xl border border-white/10 bg-navy p-7 sm:p-9">
+            <h2 className="text-2xl font-light text-off-white">Send us a message</h2>
+            <p className="mt-1.5 text-sm text-off-white/60">
               Tell us a little about your business and we&apos;ll get back to you
               within one working day.
             </p>

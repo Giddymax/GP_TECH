@@ -15,7 +15,7 @@ export function Header({ settings }: { settings: SiteSettingsRow }) {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 border-b border-line bg-off-white/90 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-ink/90 backdrop-blur-md">
       <div className="mx-auto flex h-[72px] max-w-6xl items-center justify-between px-5 sm:px-8">
         <Link
           href="/"
@@ -23,7 +23,7 @@ export function Header({ settings }: { settings: SiteSettingsRow }) {
           onClick={() => setOpen(false)}
         >
           <Image
-            src="/brand/lockup-horizontal.png"
+            src="/brand/lockup-horizontal-white.png"
             alt="Grainy Palace Tech"
             width={198}
             height={48}
@@ -38,8 +38,8 @@ export function Header({ settings }: { settings: SiteSettingsRow }) {
               key={link.href}
               href={link.href}
               className={cn(
-                "text-sm font-medium text-ink/80 transition-colors hover:text-accent-dark",
-                pathname === link.href && "text-accent-dark",
+                "text-sm font-medium text-off-white/75 transition-colors hover:text-accent-bright",
+                pathname === link.href && "text-accent-bright",
               )}
             >
               {link.label}
@@ -50,7 +50,7 @@ export function Header({ settings }: { settings: SiteSettingsRow }) {
         <div className="hidden items-center gap-3 md:flex">
           <a
             href={`tel:${settings.phone_href}`}
-            className="flex items-center gap-1.5 text-sm font-medium text-ink/80 transition-colors hover:text-accent-dark"
+            className="flex items-center gap-1.5 text-sm font-medium text-off-white/75 transition-colors hover:text-accent-bright"
           >
             <Phone className="h-4 w-4" />
             {settings.phone_display}
@@ -62,7 +62,7 @@ export function Header({ settings }: { settings: SiteSettingsRow }) {
 
         <button
           type="button"
-          className="flex h-10 w-10 items-center justify-center rounded-lg text-ink md:hidden"
+          className="flex h-10 w-10 items-center justify-center rounded-lg text-off-white md:hidden"
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
@@ -72,7 +72,7 @@ export function Header({ settings }: { settings: SiteSettingsRow }) {
       </div>
 
       {open ? (
-        <div className="border-t border-line bg-off-white px-5 pb-6 pt-2 md:hidden">
+        <div className="border-t border-white/10 bg-ink px-5 pb-6 pt-2 md:hidden">
           <nav className="flex flex-col gap-1">
             {navLinks.map((link) => (
               <Link
@@ -80,8 +80,8 @@ export function Header({ settings }: { settings: SiteSettingsRow }) {
                 href={link.href}
                 onClick={() => setOpen(false)}
                 className={cn(
-                  "rounded-lg px-3 py-3 text-base font-medium text-ink/85 transition-colors hover:bg-blue-light",
-                  pathname === link.href && "bg-blue-light text-accent-dark",
+                  "rounded-lg px-3 py-3 text-base font-medium text-off-white/80 transition-colors hover:bg-white/5",
+                  pathname === link.href && "bg-white/10 text-accent-bright",
                 )}
               >
                 {link.label}
@@ -91,7 +91,7 @@ export function Header({ settings }: { settings: SiteSettingsRow }) {
           <div className="mt-4 flex flex-col gap-3">
             <a
               href={`tel:${settings.phone_href}`}
-              className="flex items-center gap-2 text-sm font-medium text-ink/80"
+              className="flex items-center gap-2 text-sm font-medium text-off-white/75"
             >
               <Phone className="h-4 w-4" />
               {settings.phone_display}

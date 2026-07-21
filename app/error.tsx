@@ -19,11 +19,11 @@ export default function Error({
 
   return (
     <Container className="flex min-h-[60vh] flex-col items-center justify-center text-center">
-      <p className="eyebrow text-accent-dark">Something went wrong</p>
-      <h1 className="mt-3 text-3xl font-semibold text-ink sm:text-4xl">
+      <p className="eyebrow text-accent-bright">Something went wrong</p>
+      <h1 className="mt-3 text-3xl font-light text-off-white sm:text-4xl">
         That page hit a snag.
       </h1>
-      <p className="mt-3 max-w-sm text-sm leading-6 text-muted">
+      <p className="mt-3 max-w-sm text-sm leading-6 text-off-white/60">
         Try again, or reach us directly on WhatsApp if it keeps happening.
       </p>
       <div className="mt-8 flex flex-wrap justify-center gap-3">
@@ -34,7 +34,7 @@ export default function Error({
           </a>
         </Button>
       </div>
-      <Link href="/" className="mt-6 text-sm font-medium text-accent-dark hover:underline">
+      <Link href="/" className="mt-6 text-sm font-medium text-accent-bright hover:underline">
         Back to home
       </Link>
     </Container>

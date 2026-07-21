@@ -71,12 +71,12 @@ export default async function HomePage() {
       </section>
 
       {/* Trust band */}
-      <section className="bg-off-white py-14">
-        <Container className="grid grid-cols-1 divide-y divide-line sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+      <section className="py-14">
+        <Container className="grid grid-cols-1 divide-y divide-white/10 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
           {trustPoints.map((point) => (
             <div key={point.label} className="flex flex-col items-center gap-1 py-6 text-center sm:py-0">
-              <p className="font-display text-2xl font-light text-ink sm:text-3xl">{point.big}</p>
-              <p className="eyebrow text-muted">{point.label}</p>
+              <p className="font-display text-2xl font-light text-off-white sm:text-3xl">{point.big}</p>
+              <p className="eyebrow text-off-white/50">{point.label}</p>
             </div>
           ))}
         </Container>
@@ -88,11 +88,11 @@ export default async function HomePage() {
           <div className="grid gap-6 sm:grid-cols-[1.1fr_1fr] sm:items-end">
             <div>
               <Eyebrow>What we do</Eyebrow>
-              <h2 className="mt-4 max-w-md text-4xl font-light leading-[1.08] text-ink sm:text-5xl">
+              <h2 className="mt-4 max-w-md text-4xl font-light leading-[1.08] text-off-white sm:text-5xl">
                 Five ways we help you go digital
               </h2>
             </div>
-            <p className="text-base leading-7 text-muted sm:justify-self-end sm:text-right">
+            <p className="text-base leading-7 text-off-white/60 sm:justify-self-end sm:text-right">
               Pick one, or let us set up all five together — most clients start with a
               website or a go-digital setup, then add ongoing support.
             </p>
@@ -105,7 +105,7 @@ export default async function HomePage() {
                 <Link
                   key={service.slug}
                   href="/services"
-                  className="group relative flex flex-col justify-between overflow-hidden rounded-2xl bg-ink p-7 shadow-card transition-[transform,box-shadow] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:shadow-card-hover min-h-[220px]"
+                  className="group relative flex flex-col justify-between overflow-hidden rounded-2xl bg-navy p-7 shadow-card transition-[transform,box-shadow,background-color] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:bg-navy-elevated hover:shadow-card-hover min-h-[220px]"
                 >
                   <div>
                     <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 text-accent-bright transition-colors group-hover:bg-accent group-hover:text-ink">
@@ -153,17 +153,17 @@ export default async function HomePage() {
           <div className="grid gap-6 sm:grid-cols-[1.1fr_1fr] sm:items-end">
             <div>
               <Eyebrow>How it works</Eyebrow>
-              <h2 className="mt-4 max-w-md text-4xl font-light leading-[1.08] text-ink sm:text-5xl">
+              <h2 className="mt-4 max-w-md text-4xl font-light leading-[1.08] text-off-white sm:text-5xl">
                 Three visits. No headaches.
               </h2>
             </div>
           </div>
           <ol className="mt-14 grid gap-8 sm:grid-cols-3">
             {howItWorks.map((step, i) => (
-              <li key={step.id} className="border-t border-line pt-6">
-                <span className="eyebrow text-accent-dark">{String(i + 1).padStart(2, "0")}</span>
-                <h3 className="mt-3 text-lg font-normal text-ink">{step.title}</h3>
-                <p className="mt-2 text-sm leading-6 text-muted">{step.description}</p>
+              <li key={step.id} className="border-t border-white/10 pt-6">
+                <span className="eyebrow text-accent-bright">{String(i + 1).padStart(2, "0")}</span>
+                <h3 className="mt-3 text-lg font-normal text-off-white">{step.title}</h3>
+                <p className="mt-2 text-sm leading-6 text-off-white/60">{step.description}</p>
               </li>
             ))}
           </ol>
@@ -171,7 +171,7 @@ export default async function HomePage() {
       </section>
 
       {/* CTA band */}
-      <section className="bg-blue py-20">
+      <section className="border-t border-white/10 bg-navy py-20">
         <Container className="flex flex-col items-center text-center">
           <h2 className="max-w-xl text-3xl font-light leading-tight text-off-white sm:text-4xl">
             Free digital assessment — we come to you

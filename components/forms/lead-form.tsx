@@ -22,6 +22,9 @@ import { organisationTypes, serviceInterestOptions } from "@/lib/constants";
 import { submitLead } from "@/app/(marketing)/contact/actions";
 import { initialLeadActionState } from "@/lib/lead-action-state";
 
+const fieldClass = "border-white/15 bg-white/5 text-off-white placeholder:text-off-white/35 focus-visible:border-accent-bright focus-visible:ring-accent-bright/20";
+const labelClass = "text-off-white/80";
+
 export function LeadForm({ defaultService }: { defaultService?: string }) {
   const [state, formAction, isPending] = useActionState(submitLead, initialLeadActionState);
 
@@ -73,32 +76,32 @@ export function LeadForm({ defaultService }: { defaultService?: string }) {
   return (
     <form onSubmit={handleSubmit(onValid)} className="grid gap-5" noValidate>
       <div>
-        <Label htmlFor="l-name">Full name</Label>
-        <Input id="l-name" placeholder="Kwame Mensah" {...register("name")} />
+        <Label htmlFor="l-name" className={labelClass}>Full name</Label>
+        <Input id="l-name" placeholder="Kwame Mensah" className={fieldClass} {...register("name")} />
         <FieldError message={errors.name?.message} />
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
-          <Label htmlFor="l-phone">Phone number</Label>
-          <Input id="l-phone" placeholder="024 123 4567" {...register("phone")} />
+          <Label htmlFor="l-phone" className={labelClass}>Phone number</Label>
+          <Input id="l-phone" placeholder="024 123 4567" className={fieldClass} {...register("phone")} />
           <FieldError message={errors.phone?.message} />
         </div>
         <div>
-          <Label htmlFor="l-email">Email (optional)</Label>
-          <Input id="l-email" type="email" placeholder="you@business.com" {...register("email")} />
+          <Label htmlFor="l-email" className={labelClass}>Email (optional)</Label>
+          <Input id="l-email" type="email" placeholder="you@business.com" className={fieldClass} {...register("email")} />
           <FieldError message={errors.email?.message} />
         </div>
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
-          <Label htmlFor="l-org-type">Organisation type</Label>
+          <Label htmlFor="l-org-type" className={labelClass}>Organisation type</Label>
           <Select
             value={organisationType}
             onValueChange={(v) => setValue("organisationType", v, { shouldValidate: true })}
           >
-            <SelectTrigger id="l-org-type">
+            <SelectTrigger id="l-org-type" className={fieldClass}>
               <SelectValue placeholder="Select a type" />
             </SelectTrigger>
             <SelectContent>
@@ -114,12 +117,12 @@ export function LeadForm({ defaultService }: { defaultService?: string }) {
         </div>
 
         <div>
-          <Label htmlFor="l-service">What do you need help with?</Label>
+          <Label htmlFor="l-service" className={labelClass}>What do you need help with?</Label>
           <Select
             value={serviceInterest}
             onValueChange={(v) => setValue("serviceInterest", v, { shouldValidate: true })}
           >
-            <SelectTrigger id="l-service">
+            <SelectTrigger id="l-service" className={fieldClass}>
               <SelectValue placeholder="Select a service" />
             </SelectTrigger>
             <SelectContent>
@@ -136,11 +139,12 @@ export function LeadForm({ defaultService }: { defaultService?: string }) {
       </div>
 
       <div>
-        <Label htmlFor="l-message">Anything else we should know? (optional)</Label>
+        <Label htmlFor="l-message" className={labelClass}>Anything else we should know? (optional)</Label>
         <Textarea
           id="l-message"
           placeholder="E.g. I have 2 shops and want both connected."
           rows={4}
+          className={fieldClass}
           {...register("message")}
         />
         <FieldError message={errors.message?.message} />
