@@ -15,7 +15,16 @@ export function Header({ settings }: { settings: SiteSettingsRow }) {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-ink/90 backdrop-blur-md">
+    <header
+      className={cn(
+        "fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-ink/90 backdrop-blur-md transition-[opacity,transform] duration-300 ease-out",
+        // Hidden until hovered — only on devices with a real mouse. Touch
+        // devices (no reliable hover) keep it always visible; the mobile
+        // menu being open also forces it visible so it can't vanish out
+        // from under an open dropdown.
+        !open && "can-hover:-translate-y-3 can-hover:opacity-0 can-hover:hover:translate-y-0 can-hover:hover:opacity-100",
+      )}
+    >
       <div className="mx-auto flex h-[72px] max-w-6xl items-center justify-between px-5 sm:px-8">
         <Link
           href="/"

@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* Matches only devices with a real mouse (not touch), so hover-to-reveal UI
+   (the header) doesn't strand touch users who have no way to "hover". */
+@custom-variant can-hover (@media (hover: hover) and (pointer: fine));
+
 @theme {
   /* Brand palette — pixel-sampled from /assets (Grainy Palace Tech logo suite) */
   --color-ink: #13242e;
