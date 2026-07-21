@@ -38,13 +38,13 @@ export default async function HardwarePage() {
             {equipment.map((item) => {
               const Icon = getIcon(item.icon);
               return (
-                <div key={item.id} className="flex gap-5 rounded-2xl bg-navy p-7">
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/10 text-accent-bright">
+                <div key={item.id} className="flex gap-5 rounded-2xl border border-line bg-white p-7 shadow-card">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-light text-accent-dark">
                     <Icon className="h-5 w-5" />
                   </span>
                   <div>
-                    <h2 className="text-lg font-normal text-off-white">{item.title}</h2>
-                    <p className="mt-2 text-sm leading-6 text-off-white/60">{item.description}</p>
+                    <h2 className="text-lg font-normal text-ink">{item.title}</h2>
+                    <p className="mt-2 text-sm leading-6 text-muted">{item.description}</p>
                   </div>
                 </div>
               );

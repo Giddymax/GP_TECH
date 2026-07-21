@@ -23,29 +23,29 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* Hero */}
+      {/* Hero — dark */}
       <section className="relative overflow-hidden bg-ink">
         <HeroSlider slides={slides} heroLine={settings.hero_line} whatsappNumber={settings.whatsapp_number} />
       </section>
 
-      {/* Trust band */}
+      {/* Trust band — light */}
       <section className="py-14">
-        <Container className="grid grid-cols-1 divide-y divide-white/10 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+        <Container className="grid grid-cols-1 divide-y divide-line sm:grid-cols-3 sm:divide-x sm:divide-y-0">
           {trustPoints.map((point) => (
             <div key={point.label} className="flex flex-col items-center gap-1 py-6 text-center sm:py-0">
-              <p className="font-display text-2xl font-light text-off-white sm:text-3xl">{point.big}</p>
-              <p className="eyebrow text-off-white/50">{point.label}</p>
+              <p className="font-display text-2xl font-light text-ink sm:text-3xl">{point.big}</p>
+              <p className="eyebrow text-muted">{point.label}</p>
             </div>
           ))}
         </Container>
       </section>
 
-      {/* Services strip */}
-      <section className="py-24 sm:py-32">
+      {/* Services strip — dark */}
+      <section className="bg-ink py-24 sm:py-32">
         <Container>
           <div className="grid gap-6 sm:grid-cols-[1.1fr_1fr] sm:items-end">
             <div>
-              <Eyebrow>What we do</Eyebrow>
+              <Eyebrow className="text-accent-bright">What we do</Eyebrow>
               <h2 className="mt-4 max-w-md text-4xl font-light leading-[1.08] text-off-white sm:text-5xl">
                 Five ways we help you go digital
               </h2>
@@ -83,12 +83,12 @@ export default async function HomePage() {
         </Container>
       </section>
 
-      {/* Who we serve */}
-      <section className="bg-ink py-24 sm:py-32">
+      {/* Who we serve — light */}
+      <section className="py-24 sm:py-32">
         <Container>
           <div className="max-w-2xl">
-            <Eyebrow className="text-accent-bright">Who we serve</Eyebrow>
-            <h2 className="mt-4 text-4xl font-light leading-[1.08] text-off-white sm:text-5xl">
+            <Eyebrow>Who we serve</Eyebrow>
+            <h2 className="mt-4 text-4xl font-light leading-[1.08] text-ink sm:text-5xl">
               If it keeps records or serves customers, we digitize it
             </h2>
           </div>
@@ -96,7 +96,7 @@ export default async function HomePage() {
             {settings.serves.map((sector) => (
               <span
                 key={sector}
-                className="rounded-full border border-white/15 px-5 py-2.5 text-sm font-medium text-off-white/85"
+                className="rounded-full border border-line bg-white px-5 py-2.5 text-sm font-medium text-ink shadow-card"
               >
                 {sector}
               </span>
@@ -105,12 +105,12 @@ export default async function HomePage() {
         </Container>
       </section>
 
-      {/* How it works */}
-      <section className="py-24 sm:py-32">
+      {/* How it works — dark */}
+      <section className="bg-ink py-24 sm:py-32">
         <Container>
           <div className="grid gap-6 sm:grid-cols-[1.1fr_1fr] sm:items-end">
             <div>
-              <Eyebrow>How it works</Eyebrow>
+              <Eyebrow className="text-accent-bright">How it works</Eyebrow>
               <h2 className="mt-4 max-w-md text-4xl font-light leading-[1.08] text-off-white sm:text-5xl">
                 Three visits. No headaches.
               </h2>
@@ -128,13 +128,13 @@ export default async function HomePage() {
         </Container>
       </section>
 
-      {/* CTA band */}
-      <section className="border-t border-white/10 bg-navy py-20">
+      {/* CTA band — light */}
+      <section className="border-t border-line bg-blue-light py-20">
         <Container className="flex flex-col items-center text-center">
-          <h2 className="max-w-xl text-3xl font-light leading-tight text-off-white sm:text-4xl">
+          <h2 className="max-w-xl text-3xl font-light leading-tight text-ink sm:text-4xl">
             Free digital assessment — we come to you
           </h2>
-          <p className="mt-3 text-sm text-off-white/70">No obligation. No jargon. Same-week visits.</p>
+          <p className="mt-3 text-sm text-muted">No obligation. No jargon. Same-week visits.</p>
           <Button asChild size="lg" className="mt-8">
             <Link href="/contact">
               Get my free assessment

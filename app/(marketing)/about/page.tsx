@@ -37,11 +37,11 @@ export default async function AboutPage() {
           <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
             <div>
               <Eyebrow>Our story</Eyebrow>
-              <h2 className="mt-4 text-4xl font-light leading-[1.08] text-off-white">
+              <h2 className="mt-4 text-4xl font-light leading-[1.08] text-ink">
                 Why {siteConfig.name} exists
               </h2>
             </div>
-            <div className="space-y-5 text-base leading-8 text-off-white/60">
+            <div className="space-y-5 text-base leading-8 text-muted">
               {settings.about_story.map((paragraph, i) => (
                 <p key={i}>{paragraph}</p>
               ))}
@@ -77,9 +77,9 @@ export default async function AboutPage() {
 
       <section className="py-24 text-center sm:py-32">
         <Container>
-          <p className="eyebrow text-accent-bright">{settings.founder_role}</p>
-          <h2 className="mt-4 text-3xl font-light text-off-white sm:text-4xl">{settings.founder_name}</h2>
-          <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-off-white/60">{settings.founder_blurb}</p>
+          <p className="eyebrow text-accent-dark">{settings.founder_role}</p>
+          <h2 className="mt-4 text-3xl font-light text-ink sm:text-4xl">{settings.founder_name}</h2>
+          <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-muted">{settings.founder_blurb}</p>
         </Container>
       </section>
     </>

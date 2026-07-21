@@ -63,8 +63,8 @@
   }
 
   body {
-    background-color: var(--color-ink);
-    color: var(--color-off-white);
+    background-color: var(--color-off-white);
+    color: var(--color-ink);
     font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
