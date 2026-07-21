@@ -113,7 +113,16 @@ export function HeroSlider({
         />
       )}
 
-      <Container className="relative flex flex-col items-center py-28 text-center sm:py-36">
+      <Container
+        className={cn(
+          "relative flex flex-col items-center pt-28 text-center sm:pt-36",
+          // Extra bottom padding reserves room for the absolutely-positioned
+          // peek carousel below, scaled to its height at each breakpoint so
+          // it can never overlap the text above it, however tall the text
+          // itself ends up being (e.g. buttons stack taller on mobile).
+          slides.length > 0 ? "pb-[260px] sm:pb-[340px] lg:pb-[400px]" : "pb-8 sm:pb-12",
+        )}
+      >
         <Eyebrow className="text-accent-bright [text-shadow:0_1px_12px_rgba(0,0,0,0.6)]">
           Accra — for shops, farms, schools, clinics, churches &amp; offices
         </Eyebrow>
@@ -144,9 +153,15 @@ export function HeroSlider({
         <p className="mt-4 text-sm text-off-white/50 [text-shadow:0_1px_10px_rgba(0,0,0,0.5)]">
           No jargon. No trip to an office.
         </p>
-
-        <HeroPeekCarousel slides={slides} active={active} onSelect={setActive} className="mt-10 sm:mt-14" />
       </Container>
+
+      <HeroPeekCarousel
+        slides={slides}
+        active={active}
+        onSelect={setActive}
+        variant="bleed"
+        className="absolute inset-x-0 bottom-0"
+      />
     </div>
   );
 }
