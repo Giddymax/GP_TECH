@@ -15,9 +15,12 @@ export type LeadRow = LeadInsert & {
   status: LeadStatus;
 };
 
+export type HeroMediaType = "image" | "video";
+
 export type HeroSlideRow = {
   id: string;
   image_url: string;
+  media_type: HeroMediaType;
   alt_text: string;
   sort_order: number;
   published: boolean;

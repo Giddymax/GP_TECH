@@ -17,12 +17,12 @@ export default async function AboutPage() {
   return (
     <>
       <section className="bg-ink">
-        <Container className="py-20 sm:py-24">
+        <Container className="flex flex-col items-center py-28 text-center sm:py-36">
           <Eyebrow className="text-accent-bright">About us</Eyebrow>
-          <h1 className="mt-4 max-w-2xl text-4xl font-semibold leading-tight text-off-white sm:text-5xl">
+          <h1 className="mt-6 max-w-2xl text-5xl font-light leading-[1.08] text-off-white sm:text-6xl">
             {settings.about_heading}
           </h1>
-          <p className="mt-6 max-w-xl text-base leading-7 text-off-white/70">
+          <p className="mt-7 max-w-xl text-base leading-7 text-off-white/70">
             {settings.founder_name} started {siteConfig.name} to help Ghanaian
             businesses — shops, farms, schools, clinics, and churches — get the same
             digital tools bigger organisations take for granted, backed by people who
@@ -32,12 +32,12 @@ export default async function AboutPage() {
         </Container>
       </section>
 
-      <section className="py-20 sm:py-24">
+      <section className="py-24 sm:py-32">
         <Container>
           <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
             <div>
               <Eyebrow>Our story</Eyebrow>
-              <h2 className="mt-3 text-3xl font-semibold text-ink">
+              <h2 className="mt-4 text-4xl font-light leading-[1.08] text-ink">
                 Why {siteConfig.name} exists
               </h2>
             </div>
@@ -50,24 +50,24 @@ export default async function AboutPage() {
         </Container>
       </section>
 
-      <section className="bg-blue-light py-20 sm:py-24">
+      <section className="bg-ink py-24 sm:py-32">
         <Container>
           <div className="max-w-2xl">
-            <Eyebrow>Why us</Eyebrow>
-            <h2 className="mt-3 text-3xl font-semibold text-ink sm:text-4xl">
+            <Eyebrow className="text-accent-bright">Why us</Eyebrow>
+            <h2 className="mt-4 text-4xl font-light leading-[1.08] text-off-white sm:text-5xl">
               Local hands beat a foreign help desk
             </h2>
           </div>
-          <div className="mt-12 grid gap-8 sm:grid-cols-3">
+          <div className="mt-14 grid gap-4 sm:grid-cols-3">
             {values.map((value) => {
               const Icon = getIcon(value.icon);
               return (
-                <div key={value.id}>
-                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-accent-dark shadow-card">
+                <div key={value.id} className="rounded-2xl border border-white/10 p-7">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 text-accent-bright">
                     <Icon className="h-5 w-5" />
                   </span>
-                  <h3 className="mt-5 text-lg font-semibold text-ink">{value.title}</h3>
-                  <p className="mt-2 text-sm leading-6 text-muted">{value.description}</p>
+                  <h3 className="mt-5 text-lg font-normal text-off-white">{value.title}</h3>
+                  <p className="mt-2 text-sm leading-6 text-off-white/60">{value.description}</p>
                 </div>
               );
             })}
@@ -75,10 +75,10 @@ export default async function AboutPage() {
         </Container>
       </section>
 
-      <section className="py-20 text-center sm:py-24">
+      <section className="py-24 text-center sm:py-32">
         <Container>
           <p className="eyebrow text-accent-dark">{settings.founder_role}</p>
-          <h2 className="mt-3 text-2xl font-semibold text-ink sm:text-3xl">{settings.founder_name}</h2>
+          <h2 className="mt-4 text-3xl font-light text-ink sm:text-4xl">{settings.founder_name}</h2>
           <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-muted">{settings.founder_blurb}</p>
         </Container>
       </section>

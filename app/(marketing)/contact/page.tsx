@@ -48,19 +48,19 @@ export default async function ContactPage({
   return (
     <>
       <section className="bg-ink">
-        <Container className="py-20 sm:py-24">
+        <Container className="flex flex-col items-center py-28 text-center sm:py-36">
           <Eyebrow className="text-accent-bright">Contact</Eyebrow>
-          <h1 className="mt-4 max-w-2xl text-4xl font-semibold leading-tight text-off-white sm:text-5xl">
+          <h1 className="mt-6 max-w-2xl text-5xl font-light leading-[1.08] text-off-white sm:text-6xl">
             Let&apos;s talk about your business.
           </h1>
-          <p className="mt-6 max-w-xl text-base leading-7 text-off-white/70">
+          <p className="mt-7 max-w-xl text-base leading-7 text-off-white/70">
             WhatsApp is usually the fastest way to reach us. For anything else, use
             the form below and we&apos;ll respond within one working day.
           </p>
         </Container>
       </section>
 
-      <section className="py-16 sm:py-20">
+      <section className="py-20 sm:py-28">
         <Container className="grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
           <div className="space-y-8">
             <div className="grid gap-4">
@@ -101,7 +101,7 @@ export default async function ContactPage({
           </div>
 
           <div className="rounded-2xl border border-line bg-white p-7 shadow-card sm:p-9">
-            <h2 className="text-xl font-semibold text-ink">Send us a message</h2>
+            <h2 className="text-2xl font-light text-ink">Send us a message</h2>
             <p className="mt-1.5 text-sm text-muted">
               Tell us a little about your business and we&apos;ll get back to you
               within one working day.

@@ -9,12 +9,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ImageUploadField } from "@/components/admin/image-upload-field";
 import { upsertHeroSlide } from "./actions";
-import type { HeroSlideRow } from "@/lib/supabase/types";
+import type { HeroSlideRow, HeroMediaType } from "@/lib/supabase/types";
 
 export function SlideForm({ slide }: { slide?: HeroSlideRow }) {
   const [open, setOpen] = React.useState(false);
   const [pending, setPending] = React.useState(false);
   const [imageUrl, setImageUrl] = React.useState(slide?.image_url ?? "");
+  const [mediaType, setMediaType] = React.useState<HeroMediaType>(slide?.media_type ?? "image");
   const [altText, setAltText] = React.useState(slide?.alt_text ?? "Grainy Palace Tech");
   const [sortOrder, setSortOrder] = React.useState(slide?.sort_order ?? 0);
   const [published, setPublished] = React.useState(slide?.published ?? true);
@@ -22,12 +23,13 @@ export function SlideForm({ slide }: { slide?: HeroSlideRow }) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!imageUrl) {
-      toast.error("Upload an image first");
+      toast.error("Upload a photo or video first");
       return;
     }
     setPending(true);
     const result = await upsertHeroSlide(slide?.id ?? null, {
       image_url: imageUrl,
+      media_type: mediaType,
       alt_text: altText,
       sort_order: sortOrder,
       published,
@@ -58,11 +60,20 @@ export function SlideForm({ slide }: { slide?: HeroSlideRow }) {
       </DialogTrigger>
       <DialogContent>
         <DialogTitle>{slide ? "Edit slide" : "Add slide"}</DialogTitle>
-        <DialogDescription>Photos rotate on the homepage hero in sort order.</DialogDescription>
+        <DialogDescription>Photos or short video clips rotate on the homepage hero in sort order.</DialogDescription>
         <form onSubmit={handleSubmit} className="mt-5 grid gap-5">
-          <ImageUploadField value={imageUrl} onChange={setImageUrl} />
+          <ImageUploadField
+            value={imageUrl}
+            mediaType={mediaType}
+            onChange={(url, type) => {
+              setImageUrl(url);
+              setMediaType(type);
+            }}
+            accept="image/*,video/*"
+            label="Photo or video"
+          />
           <div>
-            <Label htmlFor="alt-text">Alt text (describes the photo)</Label>
+            <Label htmlFor="alt-text">Alt text (describes the photo or video)</Label>
             <Input
               id="alt-text"
               value={altText}

@@ -6,6 +6,13 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.resolve(__dirname),
   },
+  experimental: {
+    serverActions: {
+      // Default is 1mb — hero slides can be short video clips, so the
+      // upload Server Action needs enough headroom for a few MB of video.
+      bodySizeLimit: "20mb",
+    },
+  },
   images: {
     remotePatterns: [
       {

@@ -10,11 +10,19 @@ const AUTOPLAY_MS = 6000;
 export function HeroSlider({ slides }: { slides: HeroSlideRow[] }) {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
-    if (slides.length < 2 || paused) return;
-    if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReducedMotion(query.matches);
+    const onChange = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
+    query.addEventListener("change", onChange);
+    return () => query.removeEventListener("change", onChange);
+  }, []);
+
+  useEffect(() => {
+    if (slides.length < 2 || paused || reducedMotion) return;
 
     timerRef.current = setInterval(() => {
       setActive((i) => (i + 1) % slides.length);
@@ -23,7 +31,7 @@ export function HeroSlider({ slides }: { slides: HeroSlideRow[] }) {
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [slides.length, paused]);
+  }, [slides.length, paused, reducedMotion]);
 
   if (slides.length === 0) return null;
 
@@ -44,15 +52,28 @@ export function HeroSlider({ slides }: { slides: HeroSlideRow[] }) {
           )}
           aria-hidden={i !== active}
         >
-          <Image
-            src={slide.image_url}
-            alt={slide.alt_text}
-            fill
-            priority={i === 0}
-            sizes="100vw"
-            unoptimized
-            className="object-cover mix-blend-luminosity"
-          />
+          {slide.media_type === "video" ? (
+            <video
+              src={slide.image_url}
+              aria-label={slide.alt_text}
+              className="h-full w-full object-cover mix-blend-luminosity"
+              autoPlay={!reducedMotion}
+              muted
+              loop
+              playsInline
+              preload={i === 0 ? "auto" : "none"}
+            />
+          ) : (
+            <Image
+              src={slide.image_url}
+              alt={slide.alt_text}
+              fill
+              priority={i === 0}
+              sizes="100vw"
+              unoptimized
+              className="object-cover mix-blend-luminosity"
+            />
+          )}
         </div>
       ))}
 

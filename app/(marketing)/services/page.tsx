@@ -19,19 +19,19 @@ export default async function ServicesPage() {
   return (
     <>
       <section className="bg-ink">
-        <Container className="py-20 sm:py-24">
+        <Container className="flex flex-col items-center py-28 text-center sm:py-36">
           <Eyebrow className="text-accent-bright">IT services</Eyebrow>
-          <h1 className="mt-4 max-w-2xl text-4xl font-semibold leading-tight text-off-white sm:text-5xl">
+          <h1 className="mt-6 max-w-2xl text-5xl font-light leading-[1.08] text-off-white sm:text-6xl">
             Everything your business needs to run online.
           </h1>
-          <p className="mt-6 max-w-xl text-base leading-7 text-off-white/70">
+          <p className="mt-7 max-w-xl text-base leading-7 text-off-white/70">
             Pick one service or bundle a few together — every free assessment ends
             with a plan built around your business, not a generic package.
           </p>
         </Container>
       </section>
 
-      <section className="py-20 sm:py-24">
+      <section className="py-24 sm:py-32">
         <Container className="space-y-16">
           {services.map((service, index) => {
             const Icon = getIcon(service.icon);
@@ -46,7 +46,7 @@ export default async function ServicesPage() {
                   <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-light text-accent-dark">
                     <Icon className="h-6 w-6" />
                   </span>
-                  <h2 className="mt-5 text-2xl font-semibold text-ink sm:text-3xl">
+                  <h2 className="mt-5 text-3xl font-light leading-tight text-ink sm:text-4xl">
                     {service.name}
                   </h2>
                   <p className="mt-4 text-base leading-7 text-muted">{service.description}</p>

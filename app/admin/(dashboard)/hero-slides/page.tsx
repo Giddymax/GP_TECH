@@ -17,7 +17,7 @@ export default async function HeroSlidesPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold text-ink">Hero Slides</h1>
-          <p className="mt-1 text-sm text-muted">Photos that rotate on the homepage hero.</p>
+          <p className="mt-1 text-sm text-muted">Photos or short videos that rotate on the homepage hero.</p>
         </div>
         <SlideForm />
       </div>
@@ -26,7 +26,18 @@ export default async function HeroSlidesPage() {
         {(slides ?? []).map((slide) => (
           <div key={slide.id} className="overflow-hidden rounded-2xl border border-line bg-white shadow-card">
             <div className="relative aspect-video bg-off-white">
-              <Image src={slide.image_url} alt={slide.alt_text} fill sizes="400px" unoptimized className="object-cover" />
+              {slide.media_type === "video" ? (
+                <video
+                  src={slide.image_url}
+                  className="h-full w-full object-cover"
+                  muted
+                  loop
+                  autoPlay
+                  playsInline
+                />
+              ) : (
+                <Image src={slide.image_url} alt={slide.alt_text} fill sizes="400px" unoptimized className="object-cover" />
+              )}
               {!slide.published ? (
                 <span className="absolute left-2 top-2 rounded-full bg-ink/80 px-2.5 py-1 text-[11px] font-medium text-off-white">
                   Unpublished
