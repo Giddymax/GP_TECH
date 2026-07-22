@@ -14,12 +14,6 @@ export async function updateSession(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const isAdminRoute = pathname.startsWith("/admin");
   const isLoginRoute = pathname === "/admin/login";
-  // Safari doesn't expose `navigator.connection` at all, so the hero video's
-  // client-side data-saver check can never see iOS Low Data Mode — but Safari
-  // (and Chrome) DO send a `Save-Data` request header when it's on. Relay it
-  // into a cookie the client can read, since reading the header directly on
-  // the page would force it out of static rendering.
-  const saveData = request.headers.get("save-data") === "on";
 
   let user = null;
 
@@ -61,10 +55,6 @@ export async function updateSession(request: NextRequest) {
     url.pathname = "/admin";
     url.search = "";
     return NextResponse.redirect(url);
-  }
-
-  if (saveData) {
-    response.cookies.set("save-data", "1", { path: "/", maxAge: 60 * 60 * 24, sameSite: "lax" });
   }
 
   return response;

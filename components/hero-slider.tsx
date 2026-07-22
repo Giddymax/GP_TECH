@@ -14,53 +14,38 @@ import type { HeroSlideRow } from "@/lib/supabase/types";
 
 const AUTOPLAY_MS = 6000;
 
-function SlideBackground({ slide, priority, allowVideo }: { slide: HeroSlideRow; priority: boolean; allowVideo: boolean }) {
-  // Hero videos can be several MB and autoplay immediately, which can make the
-  // whole page feel frozen on a slow/metered connection while it downloads —
-  // so on a confirmed-constrained connection we skip attempting it entirely.
-  // But there's no reliable way to *detect* iOS Low Data Mode from a web page
-  // (Safari doesn't expose it via JS or send a Save-Data header), and WebKit
-  // silently refuses to load/play autoplay video under it regardless. So
-  // whenever we do attempt the video, the still image stays mounted
-  // underneath and only gets hidden once the video proves it can actually
-  // play — if it never fires that event (Low Data Mode or anything else),
-  // the image just keeps showing instead of a blank hero.
-  const [videoReady, setVideoReady] = useState(false);
-  const isVideo = slide.media_type === "video";
-  const stillSrc = isVideo ? slide.carousel_image_url : slide.image_url;
-  const attemptVideo = isVideo && (allowVideo || !stillSrc);
-
+function SlideBackground({ slide, priority }: { slide: HeroSlideRow; priority: boolean }) {
+  // The video has to be in the DOM from the very first render for autoplay to
+  // work at all on Safari — inserting it later via a state update (e.g. after
+  // a client-side "is this connection fast enough" check) makes WebKit
+  // silently refuse to ever play it. `poster` covers the "video can't load"
+  // case instead (Low Data Mode, a slow connection, anything) — the browser
+  // shows it immediately and keeps showing it if the video never starts.
+  if (slide.media_type === "video") {
+    return (
+      <video
+        src={slide.image_url}
+        poster={slide.carousel_image_url ?? undefined}
+        aria-label={slide.alt_text}
+        className="h-full w-full object-cover"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload={priority ? "auto" : "none"}
+      />
+    );
+  }
   return (
-    <>
-      {stillSrc ? (
-        <Image
-          src={stillSrc}
-          alt={slide.alt_text}
-          fill
-          priority={priority}
-          sizes="100vw"
-          unoptimized
-          className={cn("object-cover", attemptVideo && videoReady && "opacity-0")}
-        />
-      ) : null}
-      {attemptVideo ? (
-        <video
-          src={slide.image_url}
-          aria-label={slide.alt_text}
-          className={cn(
-            "absolute inset-0 h-full w-full object-cover",
-            stillSrc && "transition-opacity duration-500",
-            stillSrc && !videoReady ? "opacity-0" : "opacity-100",
-          )}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload={priority ? "auto" : "none"}
-          onCanPlay={() => setVideoReady(true)}
-        />
-      ) : null}
-    </>
+    <Image
+      src={slide.image_url}
+      alt={slide.alt_text}
+      fill
+      priority={priority}
+      sizes="100vw"
+      unoptimized
+      className="object-cover"
+    />
   );
 }
 
@@ -86,13 +71,6 @@ export function HeroSlider({
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
-  // Starts false so the server-rendered HTML never contains a `<video
-  // preload="auto" autoPlay>` tag — browsers start fetching that the instant
-  // they parse it, before React/hydration ever runs, so checking the
-  // connection in an effect can't stop an already-started multi-MB fetch.
-  // Starting conservative and upgrading to video after the check runs (or
-  // finds no signal, e.g. Safari/iOS) closes that gap.
-  const [allowVideo, setAllowVideo] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
@@ -101,19 +79,6 @@ export function HeroSlider({
     const onChange = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
     query.addEventListener("change", onChange);
     return () => query.removeEventListener("change", onChange);
-  }, []);
-
-  useEffect(() => {
-    // Network Information API — Chrome/Android only, undefined on Safari/iOS,
-    // so it alone can't see iOS's Low Data Mode. Safari does send a
-    // `Save-Data` request header when that's on, though, which middleware
-    // relays into this cookie — checking both covers both browsers.
-    type NetworkInformation = { saveData?: boolean; effectiveType?: string };
-    const connection = (navigator as Navigator & { connection?: NetworkInformation }).connection;
-    const saveDataCookie = document.cookie.split("; ").some((c) => c === "save-data=1");
-    const constrained =
-      saveDataCookie || connection?.saveData || ["slow-2g", "2g", "3g"].includes(connection?.effectiveType ?? "");
-    if (!constrained) setAllowVideo(true);
   }, []);
 
   useEffect(() => {
@@ -151,7 +116,7 @@ export function HeroSlider({
               )}
               aria-hidden={i !== active}
             >
-              <SlideBackground slide={slide} priority={i === 0} allowVideo={allowVideo} />
+              <SlideBackground slide={slide} priority={i === 0} />
             </div>
           ))}
 
