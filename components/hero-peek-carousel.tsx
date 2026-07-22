@@ -44,9 +44,11 @@ const SIZES = {
     // clips overflow, so anything wider than the screen isn't just
     // cropped visually — it's un-tappable too). Widens back out from `sm:` up.
     wrap: "flex items-end justify-center gap-2 sm:gap-4",
-    // z-50 keeps these tappable where the fixed WhatsApp bubble (z-40) would
-    // otherwise sit on top of the right-hand thumbnail on phones.
-    side: "relative z-50 h-32 w-11 shrink-0 translate-y-5 overflow-hidden rounded-t-2xl opacity-55 shadow-card transition-opacity duration-300 hover:opacity-85 sm:h-56 sm:w-48 sm:translate-y-10 lg:h-64 lg:w-56",
+    // z-[45] sits above the fixed WhatsApp bubble (z-40, so it can't steal
+    // taps meant for the right-hand thumbnail) but below the header (z-50) —
+    // it must never be able to cover the nav/menu once the page is scrolled
+    // enough that the two happen to overlap on screen.
+    side: "relative z-[45] h-32 w-11 shrink-0 translate-y-5 overflow-hidden rounded-t-2xl opacity-55 shadow-card transition-opacity duration-300 hover:opacity-85 sm:h-56 sm:w-48 sm:translate-y-10 lg:h-64 lg:w-56",
     sideRight: "",
     sideInner: "absolute inset-y-0 w-48 sm:w-96 lg:w-[26rem]",
     center: "relative z-10 h-40 w-48 shrink-0 overflow-hidden rounded-t-2xl shadow-card-hover ring-1 ring-white/20 sm:h-72 sm:w-96 lg:h-80 lg:w-[26rem]",

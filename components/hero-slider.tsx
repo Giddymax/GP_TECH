@@ -89,7 +89,11 @@ export function HeroSlider({
   return (
     <div
       className="relative"
-      onMouseEnter={() => setPaused(true)}
+      // Touch devices synthesize a `mouseenter` on tap but never fire the
+      // matching `mouseleave` (no real pointer to leave with) — pausing here
+      // on tap would freeze autoplay forever. `can-hover` gates hover-driven
+      // pausing to devices that can actually sustain a hover state.
+      onMouseEnter={() => window.matchMedia("(hover: hover) and (pointer: fine)").matches && setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
