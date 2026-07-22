@@ -15,41 +15,52 @@ import type { HeroSlideRow } from "@/lib/supabase/types";
 const AUTOPLAY_MS = 6000;
 
 function SlideBackground({ slide, priority, allowVideo }: { slide: HeroSlideRow; priority: boolean; allowVideo: boolean }) {
-  // Hero videos can be several MB and autoplay immediately — on a slow/metered
-  // connection (or when the visitor has Data Saver on) that alone can make the
-  // whole page feel frozen while it downloads. Fall back to a still image
-  // there instead of forcing the video. If there's no separate poster to fall
-  // back to, though, show the video anyway — `image_url` on a video slide is
-  // the video file itself, not a real image, so it can't be used as one.
+  // Hero videos can be several MB and autoplay immediately, which can make the
+  // whole page feel frozen on a slow/metered connection while it downloads —
+  // so on a confirmed-constrained connection we skip attempting it entirely.
+  // But there's no reliable way to *detect* iOS Low Data Mode from a web page
+  // (Safari doesn't expose it via JS or send a Save-Data header), and WebKit
+  // silently refuses to load/play autoplay video under it regardless. So
+  // whenever we do attempt the video, the still image stays mounted
+  // underneath and only gets hidden once the video proves it can actually
+  // play — if it never fires that event (Low Data Mode or anything else),
+  // the image just keeps showing instead of a blank hero.
+  const [videoReady, setVideoReady] = useState(false);
   const isVideo = slide.media_type === "video";
   const stillSrc = isVideo ? slide.carousel_image_url : slide.image_url;
-  const showVideo = isVideo && (allowVideo || !stillSrc);
+  const attemptVideo = isVideo && (allowVideo || !stillSrc);
 
-  if (showVideo) {
-    return (
-      <video
-        src={slide.image_url}
-        poster={slide.carousel_image_url ?? undefined}
-        aria-label={slide.alt_text}
-        className="h-full w-full object-cover"
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload={priority ? "auto" : "none"}
-      />
-    );
-  }
   return (
-    <Image
-      src={stillSrc!}
-      alt={slide.alt_text}
-      fill
-      priority={priority}
-      sizes="100vw"
-      unoptimized
-      className="object-cover"
-    />
+    <>
+      {stillSrc ? (
+        <Image
+          src={stillSrc}
+          alt={slide.alt_text}
+          fill
+          priority={priority}
+          sizes="100vw"
+          unoptimized
+          className={cn("object-cover", attemptVideo && videoReady && "opacity-0")}
+        />
+      ) : null}
+      {attemptVideo ? (
+        <video
+          src={slide.image_url}
+          aria-label={slide.alt_text}
+          className={cn(
+            "absolute inset-0 h-full w-full object-cover",
+            stillSrc && "transition-opacity duration-500",
+            stillSrc && !videoReady ? "opacity-0" : "opacity-100",
+          )}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload={priority ? "auto" : "none"}
+          onCanPlay={() => setVideoReady(true)}
+        />
+      ) : null}
+    </>
   );
 }
 
