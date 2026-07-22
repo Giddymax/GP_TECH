@@ -18,8 +18,14 @@ function SlideBackground({ slide, priority, allowVideo }: { slide: HeroSlideRow;
   // Hero videos can be several MB and autoplay immediately — on a slow/metered
   // connection (or when the visitor has Data Saver on) that alone can make the
   // whole page feel frozen while it downloads. Fall back to a still image
-  // there instead of forcing the video.
-  if (slide.media_type === "video" && allowVideo) {
+  // there instead of forcing the video. If there's no separate poster to fall
+  // back to, though, show the video anyway — `image_url` on a video slide is
+  // the video file itself, not a real image, so it can't be used as one.
+  const isVideo = slide.media_type === "video";
+  const stillSrc = isVideo ? slide.carousel_image_url : slide.image_url;
+  const showVideo = isVideo && (allowVideo || !stillSrc);
+
+  if (showVideo) {
     return (
       <video
         src={slide.image_url}
@@ -34,10 +40,9 @@ function SlideBackground({ slide, priority, allowVideo }: { slide: HeroSlideRow;
       />
     );
   }
-  const stillSrc = slide.media_type === "video" ? (slide.carousel_image_url ?? slide.image_url) : slide.image_url;
   return (
     <Image
-      src={stillSrc}
+      src={stillSrc!}
       alt={slide.alt_text}
       fill
       priority={priority}
@@ -88,13 +93,15 @@ export function HeroSlider({
   }, []);
 
   useEffect(() => {
-    // Network Information API — Chrome/Android only, undefined elsewhere
-    // (notably Safari/iOS). No signal is treated as "go ahead" rather than
-    // "stay conservative forever," since most of those browsers are on
-    // higher-end devices/connections anyway.
+    // Network Information API — Chrome/Android only, undefined on Safari/iOS,
+    // so it alone can't see iOS's Low Data Mode. Safari does send a
+    // `Save-Data` request header when that's on, though, which middleware
+    // relays into this cookie — checking both covers both browsers.
     type NetworkInformation = { saveData?: boolean; effectiveType?: string };
     const connection = (navigator as Navigator & { connection?: NetworkInformation }).connection;
-    const constrained = connection?.saveData || ["slow-2g", "2g", "3g"].includes(connection?.effectiveType ?? "");
+    const saveDataCookie = document.cookie.split("; ").some((c) => c === "save-data=1");
+    const constrained =
+      saveDataCookie || connection?.saveData || ["slow-2g", "2g", "3g"].includes(connection?.effectiveType ?? "");
     if (!constrained) setAllowVideo(true);
   }, []);
 
