@@ -53,7 +53,7 @@ export default async function ServicesPage() {
                   </h2>
                   <p className="mt-4 text-base leading-7 text-muted">{service.description}</p>
                   <Button asChild className="mt-6">
-                    <Link href={`/contact?service=${service.slug}`}>
+                    <Link href={`/contact?service=${service.slug}`} prefetch={false}>
                       Ask about {service.name}
                       <ArrowRight className="h-4 w-4" />
                     </Link>

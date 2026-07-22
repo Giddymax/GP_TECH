@@ -65,7 +65,7 @@ export default async function HardwarePage() {
             in your free assessment.
           </p>
           <Button asChild size="lg" className="mt-8">
-            <Link href="/contact?service=business-equipment">
+            <Link href="/contact?service=business-equipment" prefetch={false}>
               Get an equipment quote
               <ArrowRight className="h-4 w-4" />
             </Link>

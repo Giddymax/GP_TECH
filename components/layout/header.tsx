@@ -47,6 +47,7 @@ export function Header({ settings }: { settings: SiteSettingsRow }) {
       <div className="mx-auto flex h-[72px] max-w-6xl items-center justify-between px-5 sm:px-8">
         <Link
           href="/"
+          prefetch={false}
           className="flex items-center gap-2 rounded-md focus-visible:outline-none"
           onClick={() => setOpen(false)}
         >
@@ -65,6 +66,7 @@ export function Header({ settings }: { settings: SiteSettingsRow }) {
             <Link
               key={link.href}
               href={link.href}
+              prefetch={false}
               className={cn(
                 "text-sm font-medium text-off-white/75 transition-colors hover:text-accent-bright",
                 pathname === link.href && "text-accent-bright",
@@ -84,7 +86,7 @@ export function Header({ settings }: { settings: SiteSettingsRow }) {
             {settings.phone_display}
           </a>
           <Button asChild size="sm">
-            <Link href="/contact">Get a free assessment</Link>
+            <Link href="/contact" prefetch={false}>Get a free assessment</Link>
           </Button>
         </div>
 
@@ -106,6 +108,7 @@ export function Header({ settings }: { settings: SiteSettingsRow }) {
               <Link
                 key={link.href}
                 href={link.href}
+                prefetch={false}
                 onClick={() => setOpen(false)}
                 className={cn(
                   "rounded-lg px-3 py-3 text-base font-medium text-off-white/80 transition-colors active:bg-white/10 hover:bg-white/5",
@@ -125,7 +128,7 @@ export function Header({ settings }: { settings: SiteSettingsRow }) {
               {settings.phone_display}
             </a>
             <Button asChild onClick={() => setOpen(false)}>
-              <Link href="/contact">Get a free assessment</Link>
+              <Link href="/contact" prefetch={false}>Get a free assessment</Link>
             </Button>
           </div>
         </div>

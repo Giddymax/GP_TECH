@@ -29,6 +29,7 @@ export function Footer({ settings }: { settings: SiteSettingsRow }) {
                 <li key={link.href}>
                   <Link
                     href={link.href}
+                    prefetch={false}
                     className="text-sm text-off-white/75 transition-colors hover:text-accent-bright"
                   >
                     {link.label}
@@ -82,6 +83,7 @@ export function Footer({ settings }: { settings: SiteSettingsRow }) {
             <p>{settings.site_tagline}.</p>
             <Link
               href="/admin"
+              prefetch={false}
               aria-label="Staff login"
               className="flex h-7 w-7 items-center justify-center rounded-full text-off-white/30 transition-colors hover:text-accent-bright focus-visible:text-accent-bright"
             >

@@ -72,6 +72,7 @@ export default async function HomePage() {
                 <Link
                   key={service.slug}
                   href="/services"
+                  prefetch={false}
                   className="group relative flex flex-col justify-between overflow-hidden rounded-2xl bg-navy p-7 shadow-card transition-[transform,box-shadow,background-color] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:bg-navy-elevated hover:shadow-card-hover min-h-[220px]"
                 >
                   <div>
@@ -145,7 +146,7 @@ export default async function HomePage() {
           </h2>
           <p className="mt-3 text-sm text-muted">No obligation. No jargon. Same-week visits.</p>
           <Button asChild size="lg" className="mt-8">
-            <Link href="/contact">
+            <Link href="/contact" prefetch={false}>
               Get my free assessment
               <ArrowRight className="h-4 w-4" />
             </Link>
