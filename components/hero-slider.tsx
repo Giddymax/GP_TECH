@@ -133,7 +133,7 @@ export function HeroSlider({
           slides.length > 0 ? "pb-[260px] sm:pb-[340px] lg:pb-[400px]" : "pb-8 sm:pb-12",
         )}
       >
-        <Eyebrow className="text-accent-bright [text-shadow:0_1px_12px_rgba(0,0,0,0.6)]">
+        <Eyebrow className="text-off-white [text-shadow:0_1px_12px_rgba(0,0,0,0.6)]">
           {heroEyebrow}
         </Eyebrow>
         <h1 className="mt-6 max-w-4xl text-5xl font-light leading-[1.05] text-off-white [text-shadow:0_2px_20px_rgba(0,0,0,0.55)] sm:text-7xl lg:text-[5.5rem]">
