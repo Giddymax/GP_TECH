@@ -14,6 +14,17 @@ export function Header({ settings }: { settings: SiteSettingsRow }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
+  // iOS Safari has a long-standing bug where the first tap on certain
+  // elements is consumed as a hover probe instead of firing `click` — the
+  // menu button can silently do nothing on the first tap. Toggling directly
+  // on `touchend` (and suppressing the click Safari synthesizes afterward)
+  // sidesteps that entirely.
+  const toggleMenu = () => setOpen((v) => !v);
+  const handleMenuTouchEnd = (e: React.TouchEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    toggleMenu();
+  };
+
   return (
     <header
       className={cn(
@@ -71,10 +82,11 @@ export function Header({ settings }: { settings: SiteSettingsRow }) {
 
         <button
           type="button"
-          className="flex h-10 w-10 items-center justify-center rounded-lg text-off-white md:hidden"
+          className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg text-off-white [touch-action:manipulation] md:hidden"
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
-          onClick={() => setOpen((v) => !v)}
+          onClick={toggleMenu}
+          onTouchEnd={handleMenuTouchEnd}
         >
           {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
