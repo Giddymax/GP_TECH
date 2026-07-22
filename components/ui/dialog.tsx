@@ -16,19 +16,28 @@ function DialogContent({
   return (
     <DialogPrimitive.Portal>
       <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-ink/50 backdrop-blur-sm data-[state=open]:animate-fade-up" />
-      <DialogPrimitive.Content
-        className={cn(
-          "fixed left-1/2 top-1/2 z-50 w-[calc(100%-2.5rem)] max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-2xl border border-line bg-white p-6 shadow-card-hover focus:outline-none",
-          className,
-        )}
-        {...props}
-      >
-        {children}
-        <DialogPrimitive.Close className="absolute right-4 top-4 rounded-lg p-1 text-muted transition-colors hover:bg-blue-light hover:text-ink focus-visible:outline-none">
-          <X className="h-4 w-4" />
-          <span className="sr-only">Close</span>
-        </DialogPrimitive.Close>
-      </DialogPrimitive.Content>
+      {/* Centered via flexbox on the fixed wrapper, not a transform-based
+          top/left-50%+translate — that combination doesn't reflow when the
+          on-screen keyboard shrinks the visual viewport on mobile, so a
+          focused input can end up covered or the dialog cut off at the top. */}
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <DialogPrimitive.Content
+          className={cn(
+            "relative flex max-h-[85vh] w-full max-w-lg flex-col rounded-2xl border border-line bg-white p-6 shadow-card-hover focus:outline-none",
+            className,
+          )}
+          {...props}
+        >
+          {/* min-h-0 overrides this flex child's default min-height:auto —
+              without it, the div grows to fit all content instead of
+              scrolling, and anything past max-h-[85vh] just gets clipped. */}
+          <div className="min-h-0 overflow-y-auto">{children}</div>
+          <DialogPrimitive.Close className="absolute right-4 top-4 rounded-lg p-1 text-muted transition-colors hover:bg-blue-light hover:text-ink focus-visible:outline-none">
+            <X className="h-4 w-4" />
+            <span className="sr-only">Close</span>
+          </DialogPrimitive.Close>
+        </DialogPrimitive.Content>
+      </div>
     </DialogPrimitive.Portal>
   );
 }

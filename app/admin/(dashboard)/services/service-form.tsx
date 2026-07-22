@@ -73,7 +73,7 @@ export function ServiceForm({ service }: { service?: ServiceRow }) {
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="max-h-[85vh] overflow-y-auto">
+      <DialogContent>
         <DialogTitle>{service ? "Edit service" : "Add service"}</DialogTitle>
         <DialogDescription>Shown on the Home services strip and the Services page.</DialogDescription>
         <form onSubmit={handleSubmit} className="mt-5 grid gap-5">

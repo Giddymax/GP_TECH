@@ -93,13 +93,18 @@ export function ImageUploadField({
             <ImageOff className="h-5 w-5 text-muted" />
           )}
           {value && !uploading ? (
+            // The visible badge stays small to suit the thumbnail, but the
+            // button itself keeps a 44px hit area (extending past the badge)
+            // so it's still a comfortable touch target.
             <button
               type="button"
               onClick={() => onChange("", mediaType)}
               aria-label="Remove"
-              className="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-ink/70 text-off-white transition-colors hover:bg-ink"
+              className="absolute -right-2 -top-2 flex h-11 w-11 items-center justify-center [touch-action:manipulation]"
             >
-              <X className="h-3 w-3" />
+              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-ink/70 text-off-white transition-colors hover:bg-ink">
+                <X className="h-3 w-3" />
+              </span>
             </button>
           ) : null}
         </div>
