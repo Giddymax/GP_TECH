@@ -83,7 +83,11 @@ export function AdminShell({ user, children }: { user: AdminUser; children: Reac
         </div>
       </aside>
 
-      <div className="flex-1">
+      {/* min-w-0 overrides the flex item's default min-width:auto — without it,
+          the horizontally-scrollable mobile pill nav below can force this
+          whole column (and the page) wider than the viewport instead of
+          scrolling within itself. */}
+      <div className="min-w-0 flex-1">
         {/* Mobile top bar */}
         <div className="flex items-center justify-between border-b border-line bg-white px-5 py-3 lg:hidden">
           <Image

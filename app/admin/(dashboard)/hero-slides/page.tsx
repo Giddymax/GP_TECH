@@ -29,7 +29,7 @@ export default async function HeroSlidesPage() {
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {(slides ?? []).map((slide) => (
-          <div key={slide.id} className="overflow-hidden rounded-2xl border border-line bg-white shadow-card">
+          <div key={slide.id} className="min-w-0 overflow-hidden rounded-2xl border border-line bg-white shadow-card">
             <div className="relative aspect-video bg-off-white">
               {slide.media_type === "video" ? (
                 <video

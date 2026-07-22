@@ -16,7 +16,7 @@ function ItemsList({ items, section }: { items: ContentItemRow[]; section: Conte
       {items.map((item) => {
         const Icon = getIcon(item.icon);
         return (
-          <div key={item.id} className="flex items-center gap-4 rounded-xl border border-line bg-white p-4">
+          <div key={item.id} className="flex min-w-0 items-center gap-4 rounded-xl border border-line bg-white p-4">
             <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-light text-accent-dark">
               <Icon className="h-4 w-4" />
             </span>

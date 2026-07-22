@@ -28,7 +28,7 @@ export default async function ServicesAdminPage() {
           return (
             <div
               key={service.id}
-              className="flex items-center gap-4 rounded-2xl border border-line bg-white p-5 shadow-card"
+              className="flex min-w-0 items-center gap-4 rounded-2xl border border-line bg-white p-5 shadow-card"
             >
               <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-light text-accent-dark">
                 <Icon className="h-5 w-5" />

@@ -26,7 +26,7 @@ export default async function LeadsAdminPage() {
 
       <div className="mt-8 grid gap-4">
         {(leads ?? []).map((lead) => (
-          <div key={lead.id} className="rounded-2xl border border-line bg-white p-5 shadow-card">
+          <div key={lead.id} className="min-w-0 rounded-2xl border border-line bg-white p-5 shadow-card">
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
                 <p className="font-semibold text-ink">{lead.name}</p>
