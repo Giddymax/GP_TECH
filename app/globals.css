@@ -88,6 +88,17 @@
     outline-offset: 2px;
     border-radius: 2px;
   }
+
+  /* iOS Safari auto-zooms the page on focus for any input under 16px — the
+     rest of the UI uses 14px (text-sm) inputs, so force 16px specifically on
+     touch devices rather than bumping the visual size everywhere. */
+  @supports (-webkit-touch-callout: none) {
+    input,
+    select,
+    textarea {
+      font-size: 16px !important;
+    }
+  }
 }
 
 @layer utilities {

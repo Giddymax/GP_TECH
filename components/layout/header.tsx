@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -25,10 +25,27 @@ export function Header({ settings }: { settings: SiteSettingsRow }) {
     toggleMenu();
   };
 
+  useEffect(() => {
+    if (!open) return;
+
+    // Lock body scroll behind the open mobile menu, and let Escape close it.
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [open]);
+
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-ink/90 backdrop-blur-md transition-[opacity,transform] duration-300 ease-out",
+        "fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-ink/90 pt-[env(safe-area-inset-top)] backdrop-blur-md transition-[opacity,transform] duration-300 ease-out",
         // Hidden until hovered — only on devices with a real mouse. Touch
         // devices (no reliable hover) keep it always visible; the mobile
         // menu being open also forces it visible so it can't vanish out
@@ -82,7 +99,7 @@ export function Header({ settings }: { settings: SiteSettingsRow }) {
 
         <button
           type="button"
-          className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg text-off-white [touch-action:manipulation] md:hidden"
+          className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-lg text-off-white [touch-action:manipulation] active:opacity-65 md:hidden"
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
           onClick={toggleMenu}
@@ -101,7 +118,7 @@ export function Header({ settings }: { settings: SiteSettingsRow }) {
                 href={link.href}
                 onClick={() => setOpen(false)}
                 className={cn(
-                  "rounded-lg px-3 py-3 text-base font-medium text-off-white/80 transition-colors hover:bg-white/5",
+                  "rounded-lg px-3 py-3 text-base font-medium text-off-white/80 transition-colors active:bg-white/10 hover:bg-white/5",
                   pathname === link.href && "bg-white/10 text-accent-bright",
                 )}
               >

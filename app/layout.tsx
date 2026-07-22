@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Archivo, Inter, JetBrains_Mono } from "next/font/google";
 import { Toaster } from "sonner";
 import { siteConfig } from "@/lib/constants";
@@ -54,6 +54,14 @@ export const metadata: Metadata = {
     icon: "/icon.png",
     apple: "/apple-icon.png",
   },
+};
+
+// maximumScale intentionally left generous (not 1) — locking pinch-zoom is an
+// accessibility failure for low-vision visitors.
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
 };
 
 const jsonLd = {
