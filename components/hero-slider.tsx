@@ -130,7 +130,7 @@ export function HeroSlider({
           // peek carousel below, scaled to its height at each breakpoint so
           // it can never overlap the text above it, however tall the text
           // itself ends up being (e.g. buttons stack taller on mobile).
-          slides.length > 0 ? "pb-[260px] sm:pb-[340px] lg:pb-[400px]" : "pb-8 sm:pb-12",
+          slides.length > 0 ? "pb-[210px] sm:pb-[340px] lg:pb-[400px]" : "pb-8 sm:pb-12",
         )}
       >
         <Eyebrow className="text-off-white [text-shadow:0_1px_12px_rgba(0,0,0,0.6)]">
