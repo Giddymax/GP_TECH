@@ -9,7 +9,11 @@ import { createClient } from "@/lib/supabase/browser";
 import type { HeroMediaType } from "@/lib/supabase/types";
 
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
-const MAX_VIDEO_BYTES = 40 * 1024 * 1024;
+// Hero videos autoplay immediately on page load for every visitor — a large
+// clip isn't just a slow upload, it's dead weight on every phone that loads
+// the homepage afterward. Keep this tight enough that a short, well-compressed
+// loop is the only thing that fits.
+const MAX_VIDEO_BYTES = 8 * 1024 * 1024;
 
 export function ImageUploadField({
   value,
@@ -42,7 +46,9 @@ export function ImageUploadField({
     const maxBytes = isVideo ? MAX_VIDEO_BYTES : MAX_IMAGE_BYTES;
     if (file.size > maxBytes) {
       toast.error("Upload failed", {
-        description: isVideo ? "Videos must be smaller than 40MB — keep clips short." : "Images must be smaller than 5MB.",
+        description: isVideo
+          ? "Videos must be smaller than 8MB — keep clips to a few seconds and compress before uploading, since this autoplays for every visitor on the homepage."
+          : "Images must be smaller than 5MB.",
       });
       if (inputRef.current) inputRef.current.value = "";
       return;

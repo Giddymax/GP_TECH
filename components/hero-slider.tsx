@@ -14,11 +14,16 @@ import type { HeroSlideRow } from "@/lib/supabase/types";
 
 const AUTOPLAY_MS = 6000;
 
-function SlideBackground({ slide, priority }: { slide: HeroSlideRow; priority: boolean }) {
-  if (slide.media_type === "video") {
+function SlideBackground({ slide, priority, allowVideo }: { slide: HeroSlideRow; priority: boolean; allowVideo: boolean }) {
+  // Hero videos can be several MB and autoplay immediately — on a slow/metered
+  // connection (or when the visitor has Data Saver on) that alone can make the
+  // whole page feel frozen while it downloads. Fall back to a still image
+  // there instead of forcing the video.
+  if (slide.media_type === "video" && allowVideo) {
     return (
       <video
         src={slide.image_url}
+        poster={slide.carousel_image_url ?? undefined}
         aria-label={slide.alt_text}
         className="h-full w-full object-cover"
         autoPlay
@@ -29,9 +34,10 @@ function SlideBackground({ slide, priority }: { slide: HeroSlideRow; priority: b
       />
     );
   }
+  const stillSrc = slide.media_type === "video" ? (slide.carousel_image_url ?? slide.image_url) : slide.image_url;
   return (
     <Image
-      src={slide.image_url}
+      src={stillSrc}
       alt={slide.alt_text}
       fill
       priority={priority}
@@ -64,6 +70,13 @@ export function HeroSlider({
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
+  // Starts false so the server-rendered HTML never contains a `<video
+  // preload="auto" autoPlay>` tag — browsers start fetching that the instant
+  // they parse it, before React/hydration ever runs, so checking the
+  // connection in an effect can't stop an already-started multi-MB fetch.
+  // Starting conservative and upgrading to video after the check runs (or
+  // finds no signal, e.g. Safari/iOS) closes that gap.
+  const [allowVideo, setAllowVideo] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
@@ -72,6 +85,17 @@ export function HeroSlider({
     const onChange = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
     query.addEventListener("change", onChange);
     return () => query.removeEventListener("change", onChange);
+  }, []);
+
+  useEffect(() => {
+    // Network Information API — Chrome/Android only, undefined elsewhere
+    // (notably Safari/iOS). No signal is treated as "go ahead" rather than
+    // "stay conservative forever," since most of those browsers are on
+    // higher-end devices/connections anyway.
+    type NetworkInformation = { saveData?: boolean; effectiveType?: string };
+    const connection = (navigator as Navigator & { connection?: NetworkInformation }).connection;
+    const constrained = connection?.saveData || ["slow-2g", "2g", "3g"].includes(connection?.effectiveType ?? "");
+    if (!constrained) setAllowVideo(true);
   }, []);
 
   useEffect(() => {
@@ -109,7 +133,7 @@ export function HeroSlider({
               )}
               aria-hidden={i !== active}
             >
-              <SlideBackground slide={slide} priority={i === 0} />
+              <SlideBackground slide={slide} priority={i === 0} allowVideo={allowVideo} />
             </div>
           ))}
 
