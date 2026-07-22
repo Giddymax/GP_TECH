@@ -16,6 +16,7 @@ export function SlideForm({ slide }: { slide?: HeroSlideRow }) {
   const [pending, setPending] = React.useState(false);
   const [imageUrl, setImageUrl] = React.useState(slide?.image_url ?? "");
   const [mediaType, setMediaType] = React.useState<HeroMediaType>(slide?.media_type ?? "image");
+  const [carouselImageUrl, setCarouselImageUrl] = React.useState(slide?.carousel_image_url ?? "");
   const [altText, setAltText] = React.useState(slide?.alt_text ?? "Grainy Palace Tech");
   const [sortOrder, setSortOrder] = React.useState(slide?.sort_order ?? 0);
   const [published, setPublished] = React.useState(slide?.published ?? true);
@@ -30,6 +31,7 @@ export function SlideForm({ slide }: { slide?: HeroSlideRow }) {
     const result = await upsertHeroSlide(slide?.id ?? null, {
       image_url: imageUrl,
       media_type: mediaType,
+      carousel_image_url: carouselImageUrl || null,
       alt_text: altText,
       sort_order: sortOrder,
       published,
@@ -72,6 +74,16 @@ export function SlideForm({ slide }: { slide?: HeroSlideRow }) {
             accept="image/*,video/*"
             label="Photo or video"
           />
+          <ImageUploadField
+            value={carouselImageUrl}
+            onChange={(url) => setCarouselImageUrl(url)}
+            accept="image/*"
+            label="Carousel image (optional)"
+          />
+          <p className="-mt-3 text-xs text-muted">
+            Shown in the small preview row instead of the photo/video above — handy for videos, since
+            otherwise the preview just freezes on the first frame. Leave blank to reuse the photo/video above.
+          </p>
           <div>
             <Label htmlFor="alt-text">Alt text (describes the photo or video)</Label>
             <Input

@@ -21,6 +21,7 @@ export type HeroSlideRow = {
   id: string;
   image_url: string;
   media_type: HeroMediaType;
+  carousel_image_url: string | null;
   alt_text: string;
   sort_order: number;
   published: boolean;

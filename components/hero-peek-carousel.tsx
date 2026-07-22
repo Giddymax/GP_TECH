@@ -4,8 +4,16 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import type { HeroSlideRow } from "@/lib/supabase/types";
 
-/** Static preview used in the thumbnail strip — video slides show their first frame, not a playing loop. */
+/**
+ * Static preview used in the thumbnail strip. Prefers a dedicated carousel
+ * image if one's set (staff upload it separately, since a video's first
+ * frame often isn't a great thumbnail); otherwise falls back to the slide's
+ * own media — a video's first frame, or the image itself.
+ */
 function SlideThumb({ slide }: { slide: HeroSlideRow }) {
+  if (slide.carousel_image_url) {
+    return <Image src={slide.carousel_image_url} alt={slide.alt_text} fill unoptimized className="object-cover" />;
+  }
   if (slide.media_type === "video") {
     return (
       <video

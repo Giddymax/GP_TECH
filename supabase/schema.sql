@@ -63,6 +63,7 @@ create table if not exists public.hero_slides (
   id uuid primary key default gen_random_uuid(),
   image_url text not null,
   media_type text not null default 'image' check (media_type in ('image', 'video')),
+  carousel_image_url text,
   alt_text text not null default 'Grainy Palace Tech',
   sort_order int not null default 0,
   published boolean not null default true,
@@ -71,13 +72,15 @@ create table if not exists public.hero_slides (
 );
 
 -- Safe to re-run against a database where hero_slides already existed
--- before video support was added.
+-- before video support / the separate carousel image were added.
 alter table public.hero_slides
   add column if not exists media_type text not null default 'image';
 alter table public.hero_slides
   drop constraint if exists hero_slides_media_type_check;
 alter table public.hero_slides
   add constraint hero_slides_media_type_check check (media_type in ('image', 'video'));
+alter table public.hero_slides
+  add column if not exists carousel_image_url text;
 
 drop trigger if exists hero_slides_set_updated_at on public.hero_slides;
 create trigger hero_slides_set_updated_at before update on public.hero_slides

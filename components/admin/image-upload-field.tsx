@@ -26,6 +26,7 @@ export function ImageUploadField({
 }) {
   const [uploading, setUploading] = React.useState(false);
   const inputRef = React.useRef<HTMLInputElement>(null);
+  const uploadLabel = accept.includes("video") ? "Upload photo or video" : "Upload image";
 
   const handleFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -98,7 +99,7 @@ export function ImageUploadField({
           <Button asChild variant="outline" size="sm" disabled={uploading}>
             <span className="cursor-pointer">
               {uploading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Upload className="h-3.5 w-3.5" />}
-              {uploading ? "Uploading…" : "Upload photo or video"}
+              {uploading ? "Uploading…" : uploadLabel}
             </span>
           </Button>
         </label>
