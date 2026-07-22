@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Container } from "@/components/container";
 import { Eyebrow } from "@/components/eyebrow";
 import { PixelBars } from "@/components/pixel-bars";
+import { PageHeroBackground } from "@/components/page-hero-background";
 import { siteConfig } from "@/lib/constants";
 import { getIcon } from "@/lib/icon-map";
 import { getContentItems, getSiteSettings } from "@/lib/data/public";
@@ -16,8 +17,9 @@ export default async function AboutPage() {
 
   return (
     <>
-      <section className="bg-ink">
-        <Container className="flex flex-col items-center py-28 text-center sm:py-36">
+      <section className="relative overflow-hidden bg-ink">
+        <PageHeroBackground imageUrl={settings.about_hero_image_url} />
+        <Container className="relative z-10 flex flex-col items-center py-28 text-center sm:py-36">
           <Eyebrow className="text-accent-bright">About us</Eyebrow>
           <h1 className="mt-6 max-w-2xl text-5xl font-light leading-[1.08] text-off-white sm:text-6xl">
             {settings.about_heading}

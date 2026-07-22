@@ -4,9 +4,10 @@ import { ArrowRight, Check } from "lucide-react";
 import { Container } from "@/components/container";
 import { Eyebrow } from "@/components/eyebrow";
 import { Button } from "@/components/ui/button";
+import { PageHeroBackground } from "@/components/page-hero-background";
 import { siteConfig } from "@/lib/constants";
 import { getIcon } from "@/lib/icon-map";
-import { getServices } from "@/lib/data/public";
+import { getServices, getSiteSettings } from "@/lib/data/public";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -14,12 +15,13 @@ export const metadata: Metadata = {
 };
 
 export default async function ServicesPage() {
-  const services = await getServices();
+  const [services, settings] = await Promise.all([getServices(), getSiteSettings()]);
 
   return (
     <>
-      <section className="bg-ink">
-        <Container className="flex flex-col items-center py-28 text-center sm:py-36">
+      <section className="relative overflow-hidden bg-ink">
+        <PageHeroBackground imageUrl={settings.services_hero_image_url} />
+        <Container className="relative z-10 flex flex-col items-center py-28 text-center sm:py-36">
           <Eyebrow className="text-accent-bright">IT services</Eyebrow>
           <h1 className="mt-6 max-w-2xl text-5xl font-light leading-[1.08] text-off-white sm:text-6xl">
             Everything your business needs to run online.

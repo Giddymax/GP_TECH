@@ -3,6 +3,7 @@ import { Phone, Mail, MessageCircle, Clock } from "lucide-react";
 import { Container } from "@/components/container";
 import { Eyebrow } from "@/components/eyebrow";
 import { LeadForm } from "@/components/forms/lead-form";
+import { PageHeroBackground } from "@/components/page-hero-background";
 import { siteConfig, whatsappLink, whatsappMessages, serviceInterestOptions } from "@/lib/constants";
 import { getSiteSettings } from "@/lib/data/public";
 
@@ -47,8 +48,9 @@ export default async function ContactPage({
 
   return (
     <>
-      <section className="bg-ink">
-        <Container className="flex flex-col items-center py-28 text-center sm:py-36">
+      <section className="relative overflow-hidden bg-ink">
+        <PageHeroBackground imageUrl={settings.contact_hero_image_url} />
+        <Container className="relative z-10 flex flex-col items-center py-28 text-center sm:py-36">
           <Eyebrow className="text-accent-bright">Contact</Eyebrow>
           <h1 className="mt-6 max-w-2xl text-5xl font-light leading-[1.08] text-off-white sm:text-6xl">
             Let&apos;s talk about your business.

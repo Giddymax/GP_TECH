@@ -88,6 +88,15 @@ export type SiteSettingsRow = {
   serves: string[];
   site_tagline: string;
   hero_line: string;
+  hero_eyebrow: string;
+  hero_subheading: string;
+  hero_microcopy: string;
+  hero_cta_primary_label: string;
+  hero_cta_whatsapp_label: string;
+  about_hero_image_url: string | null;
+  services_hero_image_url: string | null;
+  hardware_hero_image_url: string | null;
+  contact_hero_image_url: string | null;
   about_heading: string;
   about_story: string[];
   founder_name: string;

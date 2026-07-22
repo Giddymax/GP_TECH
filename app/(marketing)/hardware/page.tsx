@@ -4,9 +4,10 @@ import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/container";
 import { Eyebrow } from "@/components/eyebrow";
 import { Button } from "@/components/ui/button";
+import { PageHeroBackground } from "@/components/page-hero-background";
 import { siteConfig } from "@/lib/constants";
 import { getIcon } from "@/lib/icon-map";
-import { getHardwareItems } from "@/lib/data/public";
+import { getHardwareItems, getSiteSettings } from "@/lib/data/public";
 
 export const metadata: Metadata = {
   title: "Hardware",
@@ -14,12 +15,13 @@ export const metadata: Metadata = {
 };
 
 export default async function HardwarePage() {
-  const equipment = await getHardwareItems();
+  const [equipment, settings] = await Promise.all([getHardwareItems(), getSiteSettings()]);
 
   return (
     <>
-      <section className="bg-ink">
-        <Container className="flex flex-col items-center py-28 text-center sm:py-36">
+      <section className="relative overflow-hidden bg-ink">
+        <PageHeroBackground imageUrl={settings.hardware_hero_image_url} />
+        <Container className="relative z-10 flex flex-col items-center py-28 text-center sm:py-36">
           <Eyebrow className="text-accent-bright">Business equipment</Eyebrow>
           <h1 className="mt-6 max-w-2xl text-5xl font-light leading-[1.08] text-off-white sm:text-6xl">
             Hardware built for how you actually run.

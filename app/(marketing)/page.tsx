@@ -25,7 +25,16 @@ export default async function HomePage() {
     <>
       {/* Hero — dark */}
       <section className="relative overflow-hidden bg-ink">
-        <HeroSlider slides={slides} heroLine={settings.hero_line} whatsappNumber={settings.whatsapp_number} />
+        <HeroSlider
+          slides={slides}
+          heroLine={settings.hero_line}
+          heroEyebrow={settings.hero_eyebrow}
+          heroSubheading={settings.hero_subheading}
+          heroMicrocopy={settings.hero_microcopy}
+          ctaPrimaryLabel={settings.hero_cta_primary_label}
+          ctaWhatsappLabel={settings.hero_cta_whatsapp_label}
+          whatsappNumber={settings.whatsapp_number}
+        />
       </section>
 
       {/* Trust band — light */}

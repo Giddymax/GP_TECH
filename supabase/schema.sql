@@ -198,6 +198,15 @@ create table if not exists public.site_settings (
   serves text[] not null default '{Shops,Farms,Schools,Clinics,Churches,Offices}',
   site_tagline text not null default 'Helping businesses to go digital',
   hero_line text not null default 'Whatever you run, run it digital.',
+  hero_eyebrow text not null default 'Accra — for shops, farms, schools, clinics, churches & offices',
+  hero_subheading text not null default 'Websites, records & receipts, business equipment, and IT support — set up in person by a team that comes to you.',
+  hero_microcopy text not null default 'No jargon. No trip to an office.',
+  hero_cta_primary_label text not null default 'Get a free assessment',
+  hero_cta_whatsapp_label text not null default 'Chat on WhatsApp',
+  about_hero_image_url text,
+  services_hero_image_url text,
+  hardware_hero_image_url text,
+  contact_hero_image_url text,
   about_heading text not null default 'Every business deserves to run digital.',
   about_story text[] not null default '{"Too many good businesses in Ghana are sold software by companies with no office here — so when something breaks, support means an email into the void. Grainy Palace Tech exists to be the opposite: a local team that sets up your website, your records, and your equipment in person, and stays reachable long after the invoice is paid.","Today we work with shops, farms, schools, clinics, and churches across Accra — helping each one go digital in whatever way actually fits how it runs, from a simple website to a full point-of-sale and records setup with GRA e-VAT compliance built in."}',
   founder_name text not null default 'Giddy',
@@ -208,6 +217,23 @@ create table if not exists public.site_settings (
 );
 
 insert into public.site_settings (id) values (true) on conflict (id) do nothing;
+
+-- Safe to re-run against a database where site_settings already existed
+-- before hero copy fields / sub-page hero images were added.
+alter table public.site_settings
+  add column if not exists hero_eyebrow text not null default 'Accra — for shops, farms, schools, clinics, churches & offices';
+alter table public.site_settings
+  add column if not exists hero_subheading text not null default 'Websites, records & receipts, business equipment, and IT support — set up in person by a team that comes to you.';
+alter table public.site_settings
+  add column if not exists hero_microcopy text not null default 'No jargon. No trip to an office.';
+alter table public.site_settings
+  add column if not exists hero_cta_primary_label text not null default 'Get a free assessment';
+alter table public.site_settings
+  add column if not exists hero_cta_whatsapp_label text not null default 'Chat on WhatsApp';
+alter table public.site_settings add column if not exists about_hero_image_url text;
+alter table public.site_settings add column if not exists services_hero_image_url text;
+alter table public.site_settings add column if not exists hardware_hero_image_url text;
+alter table public.site_settings add column if not exists contact_hero_image_url text;
 
 drop trigger if exists site_settings_set_updated_at on public.site_settings;
 create trigger site_settings_set_updated_at before update on public.site_settings

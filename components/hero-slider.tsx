@@ -45,10 +45,20 @@ function SlideBackground({ slide, priority }: { slide: HeroSlideRow; priority: b
 export function HeroSlider({
   slides,
   heroLine,
+  heroEyebrow,
+  heroSubheading,
+  heroMicrocopy,
+  ctaPrimaryLabel,
+  ctaWhatsappLabel,
   whatsappNumber,
 }: {
   slides: HeroSlideRow[];
   heroLine: string;
+  heroEyebrow: string;
+  heroSubheading: string;
+  heroMicrocopy: string;
+  ctaPrimaryLabel: string;
+  ctaWhatsappLabel: string;
   whatsappNumber: string;
 }) {
   const [active, setActive] = useState(0);
@@ -124,19 +134,18 @@ export function HeroSlider({
         )}
       >
         <Eyebrow className="text-accent-bright [text-shadow:0_1px_12px_rgba(0,0,0,0.6)]">
-          Accra — for shops, farms, schools, clinics, churches &amp; offices
+          {heroEyebrow}
         </Eyebrow>
         <h1 className="mt-6 max-w-4xl text-5xl font-light leading-[1.05] text-off-white [text-shadow:0_2px_20px_rgba(0,0,0,0.55)] sm:text-7xl lg:text-[5.5rem]">
           {heroLine}
         </h1>
         <p className="mt-7 max-w-lg text-base leading-7 text-off-white/70 [text-shadow:0_1px_12px_rgba(0,0,0,0.5)] sm:text-lg">
-          Websites, records &amp; receipts, business equipment, and IT support —
-          set up in person by a team that comes to you.
+          {heroSubheading}
         </p>
         <div className="mt-10 flex flex-col gap-3 sm:flex-row">
           <Button asChild size="lg">
             <Link href="/contact">
-              Get a free assessment
+              {ctaPrimaryLabel}
               <ArrowRight className="h-4 w-4" />
             </Link>
           </Button>
@@ -146,12 +155,12 @@ export function HeroSlider({
               target="_blank"
               rel="noopener noreferrer"
             >
-              Chat on WhatsApp
+              {ctaWhatsappLabel}
             </a>
           </Button>
         </div>
         <p className="mt-4 text-sm text-off-white/50 [text-shadow:0_1px_10px_rgba(0,0,0,0.5)]">
-          No jargon. No trip to an office.
+          {heroMicrocopy}
         </p>
       </Container>
 

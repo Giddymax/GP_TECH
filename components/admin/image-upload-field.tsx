@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { Upload, Loader2, ImageOff } from "lucide-react";
+import { Upload, Loader2, ImageOff, X } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/browser";
@@ -86,6 +86,16 @@ export function ImageUploadField({
           ) : (
             <ImageOff className="h-5 w-5 text-muted" />
           )}
+          {value && !uploading ? (
+            <button
+              type="button"
+              onClick={() => onChange("", mediaType)}
+              aria-label="Remove"
+              className="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-ink/70 text-off-white transition-colors hover:bg-ink"
+            >
+              <X className="h-3 w-3" />
+            </button>
+          ) : null}
         </div>
         <label>
           <input
